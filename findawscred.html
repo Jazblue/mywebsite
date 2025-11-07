@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Find & Remove AWS Credentials on Windows — Safe Guide</title>
+  <style>
+    :root{--bg:#0f1724;--card:#0b1220;--muted:#9aa4b2;--accent:#ff7a59;--glass: rgba(255,255,255,0.03)}
+    body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial; background:linear-gradient(180deg,#071428 0%, #061226 100%); color:#e6eef6; margin:0; padding:32px}
+    .wrap{max-width:900px;margin:0 auto}
+    header{display:flex;align-items:center;gap:16px}
+    h1{margin:0;font-size:1.5rem}
+    p.lead{margin:6px 0 22px;color:var(--muted)}
+    .card{background:var(--card);border-radius:12px;padding:20px;margin-bottom:16px;box-shadow:0 6px 18px rgba(0,0,0,0.6)}
+    h2{margin:0 0 8px}
+    ul{margin:8px 0 12px 20px;color:var(--muted)}
+    code, pre{background:var(--glass);padding:6px 8px;border-radius:6px;color:#dff3ff;font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace; font-size:0.95rem}
+    pre{overflow:auto}
+    .actions{display:flex;gap:8px;margin-top:12px}
+    button.copy{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 10px;border-radius:8px;color:var(--accent);cursor:pointer}
+    footer{color:var(--muted);font-size:0.9rem;margin-top:18px}
+    .warn{background:#3b1a12;color:#ffd6c9;padding:10px;border-left:6px solid #ff7a59;border-radius:6px;margin:10px 0}
+    .ok{background:#12321a;color:#dff6dd;padding:10px;border-left:6px solid #4ad07a;border-radius:6px;margin:10px 0}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div style="width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#ffb199);display:flex;align-items:center;justify-content:center;font-weight:700;color:#08202a">AWS</div>
+      <div>
+        <h1>Find & Remove AWS Credentials on Windows — Safe Guide</h1>
+        <p class="lead">A friendly, practical walkthrough to locate AWS credentials on a Windows machine, remove them safely, and a secure alternative: use EC2 instance profiles (IAM roles).</p>
+      </div>
+    </header>
+
+    <section class="card">
+      <h2>Why this matters</h2>
+      <p style="color:var(--muted)">Hard-coded or leftover AWS credentials on a machine risk accidental leaks or misuse. This page helps you locate common storage places, remove credentials you own, then lock things down with safer options.</p>
+    </section>
+
+    <section class="card">
+      <h2>Common places AWS credentials are stored on Windows</h2>
+      <ul>
+        <li><strong>%USERPROFILE%\.aws\credentials</strong> — AWS CLI & SDK default credentials file (most common).</li>
+        <li><strong>%USERPROFILE%\.aws\config</strong> — Named profiles and region settings.</li>
+        <li><strong>Environment variables</strong> — AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_SESSION_TOKEN (user or system scope).</li>
+        <li><strong>Windows Credential Manager</strong> — Some tools store generic credentials here.</li>
+        <li><strong>IDE config / settings</strong> — VS Code settings.json, JetBrains credentials, or extension storage.</li>
+        <li><strong>Application-specific files</strong> — Scripts, .env files, local config files, or build pipelines.</li>
+        <li><strong>PowerShell profiles or modules</strong> — e.g., stored when using AWS Tools for PowerShell.</li>
+      </ul>
+      <div class="warn">If you are not the owner of the machine or do not have permission, do <em>not</em> attempt to access another person's credentials. This guide assumes you're cleaning up your own environment.</div>
+    </section>
+
+    <section class="card">
+      <h2>Locating the usual suspects (quick)</h2>
+      <p style="color:var(--muted)">Open PowerShell (as your user) and run the following commands to check the most common locations.</p>
+
+      <h3>Check the default AWS files</h3>
+      <pre id="cmd1">type "$env:USERPROFILE\.aws\credentials"</pre>
+      <div class="actions"><button class="copy" data-target="cmd1">Copy</button></div>
+
+      <h3>Check environment variables (current shell)</h3>
+      <pre id="cmd2">Get-ChildItem Env: | Where-Object { $_.Name -match "^AWS_" }</pre>
+      <div class="actions"><button class="copy" data-target="cmd2">Copy</button></div>
+
+      <h3>Check Windows Credential Manager (manual)</h3>
+      <p style="color:var(--muted)">Open <code>Control Panel → User Accounts → Credential Manager → Windows Credentials / Generic Credentials</code> and look for entries mentioning <em>AWS</em>, <em>Amazon</em>, or specific tool names.</p>
+
+      <h3>Search common file patterns (recursive - use carefully)</h3>
+      <pre id="cmd3">Get-ChildItem -Path $env:USERPROFILE -Include *.env,credentials,*.config -Recurse -ErrorAction SilentlyContinue</pre>
+      <div class="actions"><button class="copy" data-target="cmd3">Copy</button></div>
+
+      <div class="warn">Recursive searches can surface many unrelated files — scan results carefully and do not share credential files.</div>
+    </section>
+
+    <section class="card">
+      <h2>Safely removing credentials you own</h2>
+      <p style="color:var(--muted)">Before deleting, consider making a secure backup (offline) if you may need to restore access. Only remove credentials you own or manage.</p>
+
+      <h3>Remove the default credentials file</h3>
+      <pre id="del1">Remove-Item "$env:USERPROFILE\.aws\credentials" -Force -ErrorAction SilentlyContinue</pre>
+      <div class="actions"><button class="copy" data-target="del1">Copy</button></div>
+
+      <h3>Remove profile entries only (edit instead of delete)</h3>
+      <p style="color:var(--muted)">You can open <code>%USERPROFILE%\.aws\credentials</code> in a text editor and remove the profile block(s) you no longer need.</p>
+
+      <h3>Clear environment variables (current user)</h3>
+      <pre id="del2">[Environment]::SetEnvironmentVariable('AWS_ACCESS_KEY_ID',$null,'User')
+[Environment]::SetEnvironmentVariable('AWS_SECRET_ACCESS_KEY',$null,'User')
+[Environment]::SetEnvironmentVariable('AWS_SESSION_TOKEN',$null,'User')</pre>
+      <div class="actions"><button class="copy" data-target="del2">Copy</button></div>
+
+      <h3>Remove entries from Windows Credential Manager (manual)</h3>
+      <p style="color:var(--muted)">Open Credential Manager, find the entry and choose <em>Remove</em>. Use this for any generic credential entries related to AWS tools.</p>
+
+      <h3>Other places to check</h3>
+      <ul>
+        <li>IDE settings (VS Code &rarr; <code>settings.json</code>, JetBrains password storage)</li>
+        <li>Any <code>.env</code> files in projects</li>
+        <li>CI/CD agent folders (if you run local pipelines)</li>
+      </ul>
+
+      <div class="ok">After removal, test access using a minimal command such as <code>aws sts get-caller-identity</code> to confirm credentials are gone (it should fail or require new authentication).</div>
+    </section>
+
+    <section class="card">
+      <h2>Better: don't store long-lived credentials on your Windows PC</h2>
+      <p style="color:var(--muted)">Short summary of safer alternatives — pick the one that fits your workflow.</p>
+
+      <ul>
+        <li><strong>Use EC2 instance profiles (IAM roles)</strong><br/>Assign an IAM role to your EC2 instance so the instance can call AWS APIs without any static credentials on disk. The SDKs automatically retrieve temporary credentials from the instance metadata service.</li>
+        <li><strong>AWS Systems Manager / Secrets Manager</strong><br/>Store secrets centrally and grant only services or roles the ability to retrieve them at runtime.</li>
+        <li><strong>AWS SSO / IAM Identity Center</strong><br/>Use SSO for human access; avoids long-lived keys and integrates with CLI v2.</li>
+        <li><strong>AWS CLI v2 with SSO or credential_process</strong><br/>Use short-lived sessions that refresh automatically instead of permanently stored keys.</li>
+        <li><strong>Local tooling: aws-vault or aws-okta</strong><br/>These store encrypted credentials in the OS keystore and provide ephemeral sessions to reduce leak risk.</li>
+      </ul>
+
+      <div class="warn">Note: when using EC2 instance profiles, do not place credentials on the instance. Use the role and rely on the metadata service. If you need to allow cross-account access, use IAM role assumptions.</div>
+    </section>
+
+    <section class="card">
+      <h2>Quick reference — PowerShell snippets</h2>
+      <pre id="snips"># Show credentials file
+if (Test-Path "$env:USERPROFILE\.aws\credentials") { Get-Content "$env:USERPROFILE\.aws\credentials" }
+
+# Remove credentials file
+Remove-Item "$env:USERPROFILE\.aws\credentials" -Force -ErrorAction SilentlyContinue
+
+# Clear environment variables (User scope)
+[Environment]::SetEnvironmentVariable('AWS_ACCESS_KEY_ID',$null,'User')
+[Environment]::SetEnvironmentVariable('AWS_SECRET_ACCESS_KEY',$null,'User')
+[Environment]::SetEnvironmentVariable('AWS_SESSION_TOKEN',$null,'User')</pre>
+      <div class="actions"><button class="copy" data-target="snips">Copy all</button></div>
+    </section>
+
+    <footer>
+      <p>Want this as a downloadable HTML file or need the page tweaked (more visuals, company branding, or step-by-step screenshots)? I'm happy to help — tell me what to change and I’ll update it.</p>
+      <p style="color:var(--muted)">Be careful: credential removal is irreversible unless you made a backup. Always follow company policy if you're working on managed equipment.</p>
+    </footer>
+  </div>
+
+  <script>
+    document.querySelectorAll('button.copy').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const id=btn.getAttribute('data-target');
+        const txt=document.getElementById(id).innerText;
+        navigator.clipboard.writeText(txt).then(()=>{
+          btn.innerText='Copied!';
+          setTimeout(()=>btn.innerText='Copy',1200);
+        }).catch(()=>{ btn.innerText='Could not copy'; setTimeout(()=>btn.innerText='Copy',1200); });
+      });
+    });
+  </script>
+</body>
+</html>
