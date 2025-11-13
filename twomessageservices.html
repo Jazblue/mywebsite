@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serverless vs. EC2: A Contact Form Comparison</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f6;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .hero {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 60px 20px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .hero h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 1.1em;
+            opacity: 0.8;
+        }
+
+        section {
+            max-width: 1000px;
+            margin: 0 auto 40px auto;
+            padding: 0 20px;
+        }
+
+        h2 {
+            color: #2980b9;
+            border-bottom: 2px solid #bdc3c7;
+            padding-bottom: 10px;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            margin-bottom: 30px;
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .comparison-table th {
+            background-color: #34495e;
+            color: #ecf0f1;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .comparison-table tr:hover {
+            background-color: #e8f4f8;
+        }
+
+        .feature-name {
+            font-weight: bold;
+            color: #2c3e50;
+            width: 25%; /* Adjusted column width */
+        }
+
+        .highlight {
+            background-color: #d9edf7;
+            border-left: 5px solid #3498db;
+            padding: 15px;
+            margin-top: 20px;
+            font-style: italic;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            border-top: 1px solid #bdc3c7;
+            color: #7f8c8d;
+            font-size: 0.9em;
+            margin-top: 40px;
+        }
+
+        /* Responsive adjustments for smaller screens */
+        @media (max-width: 768px) {
+            .comparison-table {
+                border: 0;
+            }
+
+            .comparison-table thead {
+                display: none;
+            }
+
+            .comparison-table tr {
+                margin-bottom: 10px;
+                display: block;
+                border: 1px solid #ddd;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            }
+
+            .comparison-table td {
+                display: block;
+                text-align: right;
+                padding-left: 50%;
+                position: relative;
+                border: none;
+            }
+
+            .comparison-table td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 0;
+                width: 50%;
+                padding-left: 15px;
+                font-weight: bold;
+                text-align: left;
+                color: #2c3e50;
+            }
+            
+            /* Setting data-label content for mobile view */
+            tr:nth-child(1) td:nth-child(2)::before { content: 'Option 1: EC2 (Server-Based)'; }
+            tr:nth-child(1) td:nth-child(3)::before { content: 'Option 2: Lambda + SES (Serverless)'; }
+            tr:nth-child(2) td:nth-child(2)::before { content: 'Architecture Model'; }
+            tr:nth-child(2) td:nth-child(3)::before { content: 'Architecture Model'; }
+            /* ... Repeat for other rows if needed, but the data-label in the HTML is often easier ... */
+            
+            .feature-name {
+                display: none; 
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero">
+        <h1>Serverless vs. Server-Based: A Contact Form Backend Journey</h1>
+        <p>A technical comparison of two solutions implemented to send form data from <code>jasoncv.click</code> directly to my email address.</p>
+    </header>
+
+    <section class="solution-details">
+        <h2>The Goal: Reliable Form-to-Email Delivery 📧</h2>
+        <p>I successfully implemented two distinct backend solutions to capture user input from a small website form and deliver the data to my email. The ultimate choice came down to **cost efficiency** and **operational overhead**.</p>
+    </section>
+
+    <section class="comparison">
+        <h2>Comparison of Architectures</h2>
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>Option 1: EC2 + n8n + Nginx (Server-Based)</th>
+                    <th>Option 2: Lambda + SES (Serverless)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="feature-name" data-label="Primary Stack">Primary Technology Stack</td>
+                    <td data-label="Option 1">AWS **EC2** instance, **n8n** (workflow tool), **Route 53** subdomain, **Nginx Proxy Manager**.</td>
+                    <td data-label="Option 2">AWS **Lambda** (compute function), **API Gateway** (endpoint), AWS **SES** (email sending).</td>
+                </tr>
+                <tr>
+                    <td class="feature-name" data-label="Architecture Model">Architecture Model</td>
+                    <td data-label="Option 1">**Server-Based / IaaS.** Requires ongoing server maintenance, patching, and monitoring.</td>
+                    <td data-label="Option 2">**Serverless / FaaS.** Fully managed by AWS—no operating system or server management required.</td>
+                </tr>
+                <tr>
+                    <td class="feature-name" data-label="Cost Model">Cost Model</td>
+                    <td data-label="Option 1">**Higher/Fixed:** Incurring cost for the EC2 instance uptime, even during idle periods.</td>
+                    <td data-label="Option 2">**Lower/Usage-Based:** Near-zero cost for low traffic (saving approximately **£0.50 – £1.00** per month) by paying only for function execution time.</td>
+                </tr>
+                <tr>
+                    <td class="feature-name" data-label="Operational Overhead">Operational Overhead</td>
+                    <td data-label="Option 1">**High:** Manual setup and management of a full Linux environment, proxy rules, and n8n updates.</td>
+                    <td data-label="Option 2">**Low:** Code focus only. AWS automatically handles infrastructure, scaling, and patching.</td>
+                </tr>
+                <tr>
+                    <td class="feature-name" data-label="Deliverability">Email Deliverability (Spam Risk)</td>
+                    <td data-label="Option 1">Good, using a well-configured sender service within n8n.</td>
+                    <td data-label="Option 2">Initially problematic (spam folder) but fixed by configuring **DKIM and SPF** records for SES.</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <section class="conclusion">
+        <h2>Conclusion: The Value of Serverless for Small Projects 💡</h2>
+        <p>For a simple, sporadic task like a website contact form, the **Serverless solution (Option 2)** was the clear winner. It offered a significant reduction in **operational overhead** and a much lower, usage-based **cost model**.</p>
+        <p class="highlight">The key technical takeaway was ensuring proper **DomainKeys Identified Mail (DKIM)** verification in AWS SES. This step ensures that the email provider (like Gmail) trusts the sender, solving the initial problem of messages being flagged as junk mail and confirming the long-term reliability of the serverless architecture.</p>
+    </section>
+
+    <footer>
+        <p>&copy; Jason Harvey | Technical Experience Document</p>
+    </footer>
+
+</body>
+</html>
