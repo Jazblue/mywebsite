@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jase's AWS Static Website Deployment</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for code blocks */
+        .code-block {
+            background-color: #1f2937; /* Darker slate/gray */
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            font-size: 0.875rem; /* text-sm */
+            line-height: 1.4;
+            color: #d1d5db; /* text-gray-300 */
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans p-4 sm:p-8">
+
+    <div class="max-w-4xl mx-auto bg-white shadow-xl rounded-2xl p-6 md:p-10 border border-gray-100">
+
+        <!-- Title Section -->
+        <header class="mb-8 border-b pb-4">
+            <h1 class="text-4xl font-extrabold text-blue-600 mb-2 tracking-tight">Jase's AWS Static Website Deployment</h1>
+            <p class="text-lg text-gray-600">
+                Hello! I'm Jase. This document outlines the continuous integration and delivery (CI/CD) pipeline I established to host this site using <strong class="text-blue-500">GitHub</strong> for version control and <strong class="text-blue-500">AWS Simple Storage Service (S3)</strong> for serving the content.
+            </p>
+        </header>
+
+        <!-- 1. GitHub Section -->
+        <section class="mb-10">
+            <h2 class="text-2xl font-bold text-gray-700 mb-4 border-l-4 border-blue-500 pl-3">1. Project Source Control (GitHub)</h2>
+            <p class="text-gray-700 mb-4">
+                The foundation of the deployment pipeline starts with version control. My process ensures all code updates are managed efficiently and transparently:
+            </p>
+            <ul class="list-disc space-y-2 pl-6 text-gray-600">
+                <li>
+                    <strong class="font-semibold">Repository Setup:</strong> All website assets (HTML, CSS, JavaScript) and deployment scripts reside in a dedicated GitHub repository.
+                </li>
+                <li>
+                    <strong class="font-semibold">Trigger Mechanism:</strong> The deployment pipeline is configured to automatically run whenever changes are pushed to the <code class="bg-gray-200 px-1 rounded">main</code> branch.
+                </li>
+            </ul>
+        </section>
+
+        <!-- 2. S3 Section -->
+        <section class="mb-10">
+            <h2 class="text-2xl font-bold text-gray-700 mb-4 border-l-4 border-blue-500 pl-3">2. Static Website Hosting (AWS S3)</h2>
+            <p class="text-gray-700 mb-4">
+                The website content is hosted on Amazon S3, configured specifically for static website hosting:
+            </p>
+            <ul class="list-disc space-y-2 pl-6 text-gray-600 mb-4">
+                <li>
+                    <strong class="font-semibold">S3 Bucket Configuration:</strong> A bucket (<code class="bg-gray-200 px-1 rounded">my-aws-website-bucket</code>) is configured for static hosting, allowing content to be served directly via an AWS endpoint.
+                </li>
+                <li>
+                    <strong class="font-semibold">Synchronization Command:</strong> Manual deployments or deployments within the pipeline rely on the following command, which handles synchronization and ensures the content is publicly readable:
+                </li>
+            </ul>
+            <pre class="code-block"><code class="language-bash">aws s3 sync . s3://my-aws-website-bucket --acl public-read</code></pre>
+        </section>
+
+        <!-- 3. GitHub Actions Section (Updated) -->
+        <section class="mb-10">
+            <h2 class="text-2xl font-bold text-gray-700 mb-4 border-l-4 border-blue-500 pl-3">3. Automated CI/CD (GitHub Actions)</h2>
+            <p class="text-gray-700 mb-4">
+                To enable true Continuous Deployment, I implemented a GitHub Actions workflow. This ensures that every approved code push is automatically deployed to AWS without manual intervention.
+            </p>
+            <p class="text-gray-700 mb-4">
+                The workflow authenticates with AWS using a dedicated **Access Key ID** and **Secret Access Key** stored securely as GitHub Secrets. The target region for all AWS operations is **Europe (London), `eu-west-2`**.
+            </p>
+
+            <!-- YAML Code Block (Updated) -->
+            <pre class="code-block"><code class="language-yaml">name: Deploy to AWS S3 Static Host
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: Check out the repository code
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Step 2: Configure AWS Credentials
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          # Uses GitHub Secrets for secure authentication
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          # Set region to Europe (London)
+          aws-region: eu-west-2
+
+      # Step 3: Synchronize files with the S3 bucket
+      - name: Deploy Static Content to S3
+        run: aws s3 sync . s3://my-aws-website-bucket --acl public-read</code></pre>
+        </section>
+
+        <!-- Deployment Status Section -->
+        <section class="pt-4 mt-8 border-t border-gray-200">
+            <h3 class="text-xl font-bold text-gray-700 mb-3">Deployment Status</h3>
+            <p class="text-gray-700">
+                This website is currently live and accessible via my custom domain:
+                <a href="https://jasoncv.click" target="_blank" class="text-lg font-semibold text-blue-600 hover:text-blue-800 transition duration-150 ease-in-out border-b-2 border-blue-200 pb-0.5">
+                    jasoncv.click
+                </a>
+            </p>
+            <p class="text-sm text-gray-500 mt-4">Thanks for reviewing my deployment setup!</p>
+        </section>
+    </div>
+
+</body>
+</html>
