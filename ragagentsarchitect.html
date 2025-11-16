@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retrieval-Augmented Generation (RAG) Portfolio</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .container { max-width: 1100px; }
+        .component-box { border: 2px solid #3b82f6; border-radius: 8px; padding: 1rem; margin-bottom: 1rem; }
+        .flow-arrow { font-size: 1.5rem; color: #10b981; }
+        .llm-box { background-color: #fef3c7; border: 2px solid #f59e0b; }
+        .db-box { background-color: #dbeafe; border: 2px solid #3b82f6; }
+        .front-box { background-color: #f0fdf4; border: 2px solid #10b981; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans p-6">
+
+    <div class="container mx-auto">
+        <header class="text-center py-10">
+            <h1 class="text-4xl font-bold text-gray-900">Retrieval-Augmented Generation (RAG) Architectures</h1>
+            <p class="text-xl text-gray-600 mt-2">Analyzing and Building AI Chatbots with Custom Knowledge Bases</p>
+        </header>
+
+        <section class="mb-12">
+            <h2 class="text-3xl font-semibold mb-6 border-b-2 border-indigo-500 pb-2">Project 1: Enterprise-Grade RAG Chatbot Analysis</h2>
+            <p class="mb-4 text-lg">
+                This architecture was reverse-engineered from a live e-commerce application (Jason's Cookie Company).
+                It demonstrates a robust, scalable, and secure **Serverless RAG** pattern utilizing a dedicated vector database.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-4 text-center">
+                <div class="col-span-1 front-box component-box">
+                    <p class="font-bold">1. Frontend</p>
+                    <p class="text-sm">User submits question via HTML form.</p>
+                </div>
+                
+                <div class="flow-arrow col-span-5 md:col-span-1 flex items-center justify-center md:justify-start">
+                    <span class="md:hidden">&#8595;</span><span class="hidden md:inline">&#8594;</span>
+                </div>
+
+                <div class="col-span-1 component-box">
+                    <p class="font-bold">2. API Gateway</p>
+                    <code class="text-xs text-red-600">https://49dyop31n3.../ask</code>
+                    <p class="text-sm">Entry point, routes request securely.</p>
+                </div>
+
+                <div class="flow-arrow col-span-5 md:col-span-1 flex items-center justify-center md:justify-start">
+                    <span class="md:hidden">&#8595;</span><span class="hidden md:inline">&#8594;</span>
+                </div>
+                
+                <div class="col-span-1 llm-box component-box">
+                    <p class="font-bold">3. AWS Lambda (Orchestrator)</p>
+                    <p class="text-sm">Code executes RAG logic, contains **secure API Key** to Pinecone.</p>
+                </div>
+
+                <div class="flow-arrow col-span-5 md:col-span-1 flex items-center justify-center md:justify-start">
+                    <span class="md:hidden">⬇ Query / ⬆ Context</span><span class="hidden md:inline">↔ Retrieve Context</span>
+                </div>
+
+                <div class="col-span-1 db-box component-box">
+                    <p class="font-bold">4. Vector Database</p>
+                    <p class="text-xs">**Pinecone Index: `chatbot`**</p>
+                    <p class="text-xs">Host: `chatbot-6dtmms8...pinecone.io`</p>
+                    <p class="text-xs">Model: `text-embedding-3-small`</p>
+                </div>
+                
+                <div class="flow-arrow col-span-5 md:col-span-1 flex items-center justify-center md:justify-start">
+                    <span class="md:hidden">⬇ Context / ⬆ Answer</span><span class="hidden md:inline">↔ Send to LLM</span>
+                </div>
+
+                <div class="col-span-1 llm-box component-box">
+                    <p class="font-bold">5. Large Language Model (LLM)</p>
+                    <p class="text-sm">Generates final answer based on retrieved context.</p>
+                </div>
+            </div>
+
+            <h3 class="text-xl font-semibold mt-6 mb-2">Key Technical Takeaways:</h3>
+            <ul class="list-disc list-inside ml-4">
+                <li>**Serverless Architecture:** Utilizes **AWS API Gateway** and **AWS Lambda** for cost-efficient, auto-scaling backend.</li>
+                <li>**Dedicated Vector Store:** Confirmed use of **Pinecone** for high-performance semantic search, demonstrating an understanding of specialized ML infrastructure.</li>
+                <li>**Security:** Critically, the **Pinecone API Key** is hidden in the Lambda Environment Variables, ensuring data security—a crucial enterprise requirement.</li>
+            </ul>
+        </section>
+
+        <section class="mb-12">
+            <h2 class="text-3xl font-semibold mb-6 border-b-2 border-indigo-500 pb-2">Project 2: Basic Gemini RAG Chatbot (Your Implementation)</h2>
+            <p class="mb-4 text-lg">
+                This simple RAG implementation uses a lightweight approach for a personal knowledge base, demonstrating the fundamental RAG concept without the complexity of a full vector store.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                <div class="col-span-1 front-box component-box">
+                    <p class="font-bold">1. Frontend</p>
+                    <p class="text-sm">User inputs query.</p>
+                </div>
+                
+                <div class="flow-arrow col-span-3 md:col-span-1 flex items-center justify-center md:justify-start">
+                    <span class="md:hidden">&#8595;</span><span class="hidden md:inline">&#8594;</span>
+                </div>
+
+                <div class="col-span-1 llm-box component-box">
+                    <p class="font-bold">2. Gemini API / Tool</p>
+                    <p class="text-sm">The LLM is provided with the custom knowledge file as a **Tool** or **Context**. Gemini searches the file directly.</p>
+                </div>
+                
+                <div class="flow-arrow col-span-3 md:col-span-1 flex items-center justify-center md:justify-start">
+                    <span class="md:hidden">⬇ Read File</span><span class="hidden md:inline">↔ Access Knowledge</span>
+                </div>
+
+                <div class="col-span-1 db-box component-box">
+                    <p class="font-bold">3. Knowledge Base</p>
+                    <code class="text-xs text-red-600">aboutme.txt</code>
+                    <p class="text-sm">Simple unstructured text file (e.g., in a local directory or S3 bucket).</p>
+                </div>
+            </div>
+
+            <h3 class="text-xl font-semibold mt-6 mb-2">Key Learning Points:</h3>
+            <ul class="list-disc list-inside ml-4">
+                <li>**Core RAG Principle:** Successfully implemented **Retrieval** (scanning the text file) and **Generation** (using Gemini) to ground the response.</li>
+                <li>**Cost Efficiency:** Demonstrates the ability to build a functional, low-cost RAG system for a defined, small knowledge scope.</li>
+                <li>**Conceptual Understanding:** A clear understanding of how to provide **external context** to an LLM to prevent hallucinations and provide accurate, specific answers.</li>
+            </ul>
+        </section>
+        
+        <footer class="text-center mt-12 pt-6 border-t-2 border-gray-200">
+            <p class="text-gray-500">Architecture Analysis by [Your Name] - Demonstrating expertise in GenAI and Cloud Infrastructure.</p>
+        </footer>
+    </div>
+
+</body>
+</html>
