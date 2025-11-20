@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My AWS ECS Project Journey</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #d32f2f;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+        main {
+            max-width: 900px;
+            margin: 30px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+        }
+        h2 {
+            color: #d32f2f;
+        }
+        code {
+            background: #eee;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        ul {
+            margin-bottom: 20px;
+        }
+        .problem {
+            background-color: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 10px 15px;
+            margin-bottom: 15px;
+        }
+        .solution {
+            background-color: #d4edda;
+            border-left: 5px solid #28a745;
+            padding: 10px 15px;
+            margin-bottom: 20px;
+        }
+        .images {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 30px;
+            justify-content: center;
+        }
+        .images img {
+            max-width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>My AWS ECS Project Journey</h1>
+    </header>
+    <main>
+        <h2>Project Overview</h2>
+        <p>
+            I built a Python FastAPI application that returns <code>{"message": "Hello from ECS!"}</code> and deployed it on <strong>AWS ECS Fargate</strong>. The goal was to understand the full container deployment workflow on AWS, including ECR, ECS, IAM roles, and networking.
+        </p>
+
+        <h2>Challenges and Resolutions</h2>
+
+        <div class="problem">
+            <strong>Local Windows setup issue:</strong> Running <code>uvicorn main:app --host 0.0.0.0 --port 8080</code> on Python 3.14 failed with a launcher error: <em>"Unable to create process..."</em>.
+        </div>
+        <div class="solution">
+            <strong>Resolution:</strong> Installed FastAPI and Uvicorn specifically for Python 3.14 using:
+            <pre>py -3.14 -m pip install fastapi "uvicorn[standard]"</pre>
+            Then ran the application using the Python module to avoid launcher issues:
+            <pre>py -3.14 -m uvicorn main:app --host 0.0.0.0 --port 8080</pre>
+            After this, the app ran correctly on <code>localhost:8080</code>.
+        </div>
+
+        <div class="problem">
+            <strong>ECR region mismatch:</strong> Attempting to push the Docker image to <code>eu-west-2</code> failed because the repository actually existed in <code>us-east-1</code>.
+        </div>
+        <div class="solution">
+            <strong>Resolution:</strong> Updated Docker tag and push commands to use the correct region:
+            <pre>
+aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com
+docker tag ecs-python-app:latest ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/ecs-python-app:latest
+docker push ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/ecs-python-app:latest
+            </pre>
+            After this, the image successfully appeared in ECR.
+        </div>
+
+        <div class="problem">
+            <strong>Service-linked role error when creating ECS cluster:</strong>
+            <pre>
+Resource handler returned message: "Invalid request provided: CreateCluster Invalid Request: Unable to assume the service linked role..."
+            </pre>
+        </div>
+        <div class="solution">
+            <strong>Resolution:</strong> Verified that the ECS service-linked role existed using:
+            <pre>aws iam get-role --role-name AWSServiceRoleForECS</pre>
+            Once confirmed, creating a new cluster with a slightly different name succeeded because ECS could now assume the existing service-linked role.
+        </div>
+
+        <div class="problem">
+            <strong>Security group blocking public access:</strong> The task was running, but accessing the public IP failed.
+        </div>
+        <div class="solution">
+            <strong>Resolution:</strong> Added an inbound rule to the task's security group to allow TCP traffic on port 8080 from all sources:
+            <pre>
+Type: Custom TCP
+Port: 8080
+Source: 0.0.0.0/0
+            </pre>
+            After this, the app became accessible in the browser at <code>http://&lt;Public-IP&gt;:8080</code>.
+        </div>
+
+        <h2>Key Learnings</h2>
+        <ul>
+            <li>Using Windows Python correctly with Uvicorn to avoid local runtime errors.</li>
+            <li>Understanding AWS ECR regions and ensuring Docker pushes match repository location.</li>
+            <li>Importance of ECS service-linked roles and IAM permissions.</li>
+            <li>Networking essentials, including public IPs and security group rules for container access.</li>
+            <li>End-to-end deployment workflow from local container to ECS Fargate.</li>
+        </ul>
+
+        <h2>Outcome</h2>
+        <p>
+            Successfully deployed a containerized FastAPI application on AWS ECS Fargate, accessible publicly, with all networking and IAM configurations correctly in place. This demonstrates real-world cloud deployment experience and troubleshooting skills.
+        </p>
+
+        <h2>Project Screenshots</h2>
+        <div class="images">
+            <div>
+                <img src="ecsbuild.png" alt="Downloading and building Docker files">
+                <p style="text-align:center;">ecsbuild.png — Downloading/building Docker files</p>
+            </div>
+            <div>
+                <img src="cluster1.png" alt="Working on AWS Console">
+                <p style="text-align:center;">cluster1.png — Working on AWS Console</p>
+            </div>
+            <div>
+                <img src="simpleecsoutput.png" alt="Resulting ECS Output">
+                <p style="text-align:center;">simpleecsoutput.png — Resulting ECS Output</p>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
