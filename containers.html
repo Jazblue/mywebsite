@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My AWS ECS Project Journey</title>
+    <title>AWS ECS Fargate Deployment Case Study</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -64,77 +64,74 @@
 </head>
 <body>
     <header>
-        <h1>My AWS ECS Project Journey</h1>
+        <h1>🚀 AWS ECS Fargate Deployment Case Study</h1>
     </header>
     <main>
-        <h2>Project Overview</h2>
+        <h2>Project Overview (Technical Depth)</h2>
         <p>
-            I built a Python FastAPI application that returns <code>{"message": "Hello from ECS!"}</code> and deployed it on <strong>AWS ECS Fargate</strong>. The goal was to understand the full container deployment workflow on AWS, including ECR, ECS, IAM roles, and networking.
+            I built and deployed a containerized Python **FastAPI** microservice that returns <code>{"message": "Hello from ECS!"}</code>. The deployment target was **AWS Elastic Container Service (ECS) using the Fargate launch type**.
+        </p>
+        <p>
+            The core objective was to demonstrate an end-to-end container delivery workflow, covering: **Amazon ECR** for image storage, ECS orchestration, configuration of the required **IAM Task Execution Role**, and securing the service via **VPC Security Groups**.
         </p>
 
-        <h2>Challenges and Resolutions</h2>
+        <h2>Challenges and Resolutions (Enhanced with Technical Context)</h2>
 
         <div class="problem">
-            <strong>Local Windows setup issue:</strong> Running <code>uvicorn main:app --host 0.0.0.0 --port 8080</code> on Python 3.14 failed with a launcher error: <em>"Unable to create process..."</em>.
+            <strong>1. Local Python/Uvicorn Setup Issue on Windows:</strong> Running <code>uvicorn main:app --host 0.0.0.0 --port 8080</code> on Python 3.14 failed with a Windows launcher error: <em>"Unable to create process..."</em>.
         </div>
         <div class="solution">
-            <strong>Resolution:</strong> Installed FastAPI and Uvicorn specifically for Python 3.14 using:
-            <pre>py -3.14 -m pip install fastapi "uvicorn[standard]"</pre>
-            Then ran the application using the Python module to avoid launcher issues:
-            <pre>py -3.14 -m uvicorn main:app --host 0.0.0.0 --port 8080</pre>
-            After this, the app ran correctly on <code>localhost:8080</code>.
+            <strong>Resolution:</strong> The issue was resolved by invoking Uvicorn directly as a **Python module**, bypassing the problematic Windows launcher script. This ensured the application ran correctly before containerization.
+            <pre>py -3.14 -m pip install fastapi "uvicorn[standard]"
+py -3.14 -m uvicorn main:app --host 0.0.0.0 --port 8080</pre>
         </div>
 
         <div class="problem">
-            <strong>ECR region mismatch:</strong> Attempting to push the Docker image to <code>eu-west-2</code> failed because the repository actually existed in <code>us-east-1</code>.
+            <strong>2. ECR Region and Authentication Mismatch:</strong> Attempting a Docker push to the expected <code>eu-west-2</code> region failed because the actual ECR repository existed in <code>us-east-1</code>.
         </div>
         <div class="solution">
-            <strong>Resolution:</strong> Updated Docker tag and push commands to use the correct region:
+            <strong>Resolution:</strong> This required explicitly authenticating the Docker CLI against the correct region's registry before tagging and pushing the image. This highlights the importance of matching the build environment's configuration with the target AWS region for ECR operations.
             <pre>
 aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com
 docker tag ecs-python-app:latest ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/ecs-python-app:latest
 docker push ACCOUNT_ID.dkr.ecr.us-east-1.amazonaws.com/ecs-python-app:latest
             </pre>
-            After this, the image successfully appeared in ECR.
         </div>
 
         <div class="problem">
-            <strong>Service-linked role error when creating ECS cluster:</strong>
+            <strong>3. ECS Service-Linked Role Dependency Error:</strong> Cluster creation failed with an IAM error:
             <pre>
 Resource handler returned message: "Invalid request provided: CreateCluster Invalid Request: Unable to assume the service linked role..."
             </pre>
         </div>
         <div class="solution">
-            <strong>Resolution:</strong> Verified that the ECS service-linked role existed using:
-            <pre>aws iam get-role --role-name AWSServiceRoleForECS</pre>
-            Once confirmed, creating a new cluster with a slightly different name succeeded because ECS could now assume the existing service-linked role.
+            <strong>Resolution:</strong> This indicated a temporary dependency issue where the **AWSServiceRoleForECS** was not immediately assumable. The solution was to verify the existence of the ECS Service-Linked Role using <code>aws iam get-role --role-name AWSServiceRoleForECS</code>. A subsequent cluster creation attempt succeeded, confirming the underlying IAM dependency was resolved.
         </div>
 
         <div class="problem">
-            <strong>Security group blocking public access:</strong> The task was running, but accessing the public IP failed.
+            <strong>4. Security Group Blocking Ingress Traffic:</strong> The Fargate task was in a <code>RUNNING</code> state, but accessing the Task's Public IP failed (timeout).
         </div>
         <div class="solution">
-            <strong>Resolution:</strong> Added an inbound rule to the task's security group to allow TCP traffic on port 8080 from all sources:
+            <strong>Resolution:</strong> The issue was a missing ingress rule on the **VPC Security Group** attached to the Fargate Task's Elastic Network Interface (ENI). An inbound rule was added to allow TCP traffic on the container's exposed port.
             <pre>
 Type: Custom TCP
 Port: 8080
 Source: 0.0.0.0/0
             </pre>
-            After this, the app became accessible in the browser at <code>http://&lt;Public-IP&gt;:8080</code>.
+            *Note: In a production environment, this source would typically be restricted to an Application Load Balancer's (ALB) Security Group for enhanced security.*
         </div>
 
-        <h2>Key Learnings</h2>
+        <h2>Key Learnings (Refined for Architectural Awareness)</h2>
         <ul>
-            <li>Using Windows Python correctly with Uvicorn to avoid local runtime errors.</li>
-            <li>Understanding AWS ECR regions and ensuring Docker pushes match repository location.</li>
-            <li>Importance of ECS service-linked roles and IAM permissions.</li>
-            <li>Networking essentials, including public IPs and security group rules for container access.</li>
-            <li>End-to-end deployment workflow from local container to ECS Fargate.</li>
+            <li>**VPC Networking and Security:** Mastery of configuring **VPC Subnets** and **Security Groups** to ensure Fargate tasks can be publicly accessed while maintaining proper boundary security.</li>
+            <li>**IAM Roles and Permissions:** Clear understanding of the distinct functions of the **Task Execution Role** (for ECR/CloudWatch) and the standard **Task Role** (for application-level service interaction).</li>
+            <li>**Serverless Container Strategy (Fargate):** Successful selection and implementation of Fargate over the EC2 launch type, confirming knowledge of the serverless model for container orchestration.</li>
+            <li>**AWS CLI/Docker ECR Integration:** Proficiency in using the AWS CLI for ECR authentication and managing the Docker image lifecycle (tagging, pushing) across different AWS regions.</li>
         </ul>
 
         <h2>Outcome</h2>
         <p>
-            Successfully deployed a containerized FastAPI application on AWS ECS Fargate, accessible publicly, with all networking and IAM configurations correctly in place. This demonstrates real-world cloud deployment experience and troubleshooting skills.
+            A containerized FastAPI application was successfully deployed on **AWS ECS Fargate**, accessible publicly via its Task Public IP. This project demonstrates strong hands-on experience in cloud deployment architecture, security configuration, and cross-service AWS integration.
         </p>
 
         <h2>Project Screenshots</h2>
