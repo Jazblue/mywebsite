@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Full CRUD API Notes Client</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f4f4; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+        .section { margin-bottom: 30px; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        input[type="text"], textarea { width: calc(100% - 22px); padding: 10px; margin: 8px 0; display: inline-block; border: 1px solid #ccc; border-radius: 4px; box-sizing: content-box; }
+        button { background-color: #4CAF50; color: white; padding: 10px 15px; margin-top: 10px; border: none; border-radius: 4px; cursor: pointer; margin-right: 10px;}
+        button.delete-btn { background-color: #f44336; }
+        button:hover { opacity: 0.9; }
+        #response { margin-top: 20px; padding: 10px; border: 1px solid #ddd; background-color: #e9e9e9; white-space: pre-wrap; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Full CRUD API Tester</h1>
+        <p>Use this client to test all four endpoints. Run the **POST** request first; the **Note ID** field will auto-fill for the other tests.</p>
+        
+        <input type="hidden" id="currentNoteId" value="">
+
+        <div class="section">
+            <h2>1. Create Note (POST)</h2>
+            <form id="createNoteForm">
+                <input type="text" id="postUserId" value="jason" placeholder="User ID" required>
+                <input type="text" id="postTitle" placeholder="Note Title" required>
+                <textarea id="postContent" rows="3" placeholder="Note Content" required>This is the content of the new note.</textarea>
+                <button type="submit">POST to /create</button>
+            </form>
+        </div>
+
+        <div class="section">
+            <h2>2. Read Note (GET)</h2>
+            <form id="readNoteForm">
+                <input type="text" id="getUserId" value="jason" placeholder="User ID" required>
+                <input type="text" id="getNoteId" placeholder="Note ID (auto-filled after POST)" required>
+                <button type="submit">GET from /get</button>
+            </form>
+        </div>
+
+        <div class="section">
+            <h2>3. Update Note (PUT)</h2>
+            <form id="updateNoteForm">
+                <input type="text" id="putUserId" value="jason" placeholder="User ID" required>
+                <input type="text" id="putNoteId" placeholder="Note ID (auto-filled after POST)" required>
+                <input type="text" id="putTitle" value="UPDATED Title" placeholder="New Title" required>
+                <textarea id="putContent" rows="3" placeholder="New Content" required>The content has been successfully updated via the client!</textarea>
+                <button type="submit">PUT to /update</button>
+            </form>
+        </div>
+
+        <div class="section">
+            <h2>4. Delete Note (DELETE)</h2>
+            <form id="deleteNoteForm">
+                <input type="text" id="deleteUserId" value="jason" placeholder="User ID" required>
+                <input type="text" id="deleteNoteId" placeholder="Note ID (auto-filled after POST)" required>
+                <button type="submit" class="delete-btn">DELETE to /delete</button>
+            </form>
+        </div>
+        
+        <hr>
+        
+        <h3>API Response:</h3>
+        <div id="response">Waiting for test...</div>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'https://1eewgz8ff8.execute-api.eu-west-2.amazonaws.com/live';
+        const responseDiv = document.getElementById('response');
+        
+        // Helper function to update response display
+        function displayResponse(response, data) {
+            responseDiv.textContent = `Status: ${response.status} ${response.statusText}\n`;
+            if (data) {
+                responseDiv.textContent += JSON.stringify(data, null, 2);
+            } else {
+                responseDiv.textContent += 'No Content returned (likely a successful DELETE).';
+            }
+        }
+        
+        // --- 1. POST (CREATE) ---
+        document.getElementById('createNoteForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const payload = {
+                userId: document.getElementById('postUserId').value,
+                title: document.getElementById('postTitle').value,
+                content: document.getElementById('postContent').value
+            };
+
+            responseDiv.textContent = 'Sending POST request...';
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/create`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await response.json();
+                displayResponse(response, data);
+
+                // **AUTOMATICALLY COPY the new Note ID for the other forms**
+                if (response.ok && data.noteId) {
+                    const noteId = data.noteId;
+                    document.getElementById('getNoteId').value = noteId;
+                    document.getElementById('putNoteId').value = noteId;
+                    document.getElementById('deleteNoteId').value = noteId;
+                    alert(`Note created! ID copied to GET, PUT, and DELETE fields: ${noteId}`);
+                }
+
+            } catch (error) {
+                responseDiv.textContent = `Request failed: ${error.message}`;
+                console.error('Error:', error);
+            }
+        });
+        
+        // --- 2. GET (READ) ---
+        document.getElementById('readNoteForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const userId = document.getElementById('getUserId').value;
+            const noteId = document.getElementById('getNoteId').value;
+            const url = `${API_BASE_URL}/get?userId=${userId}&noteId=${noteId}`;
+
+            responseDiv.textContent = 'Sending GET request...';
+
+            try {
+                const response = await fetch(url, { method: 'GET' });
+                // Handle 204 No Content for cases where the note was already deleted
+                const data = (response.status !== 204) ? await response.json() : null;
+                displayResponse(response, data);
+            } catch (error) {
+                responseDiv.textContent = `Request failed: ${error.message}`;
+            }
+        });
+
+        // --- 3. PUT (UPDATE) ---
+        document.getElementById('updateNoteForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const userId = document.getElementById('putUserId').value;
+            const noteId = document.getElementById('putNoteId').value;
+            
+            const payload = {
+                title: document.getElementById('putTitle').value,
+                content: document.getElementById('putContent').value
+            };
+            
+            const url = `${API_BASE_URL}/update?userId=${userId}&noteId=${noteId}`;
+            responseDiv.textContent = 'Sending PUT request...';
+
+            try {
+                const response = await fetch(url, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                const data = await response.json(); 
+                displayResponse(response, data);
+            } catch (error) {
+                responseDiv.textContent = `Request failed: ${error.message}`;
+            }
+        });
+
+        // --- 4. DELETE (DELETE) ---
+        document.getElementById('deleteNoteForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const userId = document.getElementById('deleteUserId').value;
+            const noteId = document.getElementById('deleteNoteId').value;
+            const url = `${API_BASE_URL}/delete?userId=${userId}&noteId=${noteId}`;
+
+            responseDiv.textContent = 'Sending DELETE request...';
+
+            try {
+                const response = await fetch(url, { method: 'DELETE' });
+                
+                // DELETE usually returns 204 No Content
+                displayResponse(response, null); 
+            } catch (error) {
+                responseDiv.textContent = `Request failed: ${error.message}`;
+            }
+        });
+    </script>
+
+</body>
+</html>
