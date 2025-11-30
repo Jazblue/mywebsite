@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jason CV Helper</title>
+<style>
+  body { font-family: Arial, sans-serif; line-height: 1.6; margin: 20px; }
+  h1 { color: #0078D4; }
+  code { background: #f4f4f4; padding: 2px 4px; border-radius: 4px; }
+  pre { background: #f4f4f4; padding: 10px; border-radius: 4px; overflow-x: auto; }
+  .section { margin-bottom: 30px; }
+</style>
+</head>
+<body>
+  <h1>Jason CV Helper: Local Testing & CORS Tips</h1>
+
+  <div class="section">
+    <h2>Why CORS Matters</h2>
+    <p>
+      APIs enforce Cross-Origin Resource Sharing (CORS) to prevent unauthorized requests.  
+      If you try to query an AWS Lambda API from your local machine (<code>localhost</code>) or a live website, the API must allow your origin.
+    </p>
+  </div>
+
+  <div class="section">
+    <h2>Setting the Origin in AWS API Gateway / Lambda</h2>
+    <p>
+      In your Lambda function, make sure your HTTP response headers include:
+    </p>
+    <pre>{
+  "statusCode": 200,
+  "headers": {
+    "Access-Control-Allow-Origin": "https://jasoncv.click, http://localhost:8000",
+    "Access-Control-Allow-Methods": "POST,GET,OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type"
+  },
+  "body": "...your response..."
+}</pre>
+    <p>
+      This allows your API to respond both from your live website and from a local server for testing.
+    </p>
+  </div>
+
+  <div class="section">
+    <h2>Testing Locally with Python</h2>
+    <p>To serve your HTML locally for testing, navigate to your project folder and run:</p>
+    <pre>python -m http.server 8000</pre>
+    <p>Then open your browser at <code>http://localhost:8000/yourfile.html</code>.</p>
+    <p>This simulates a live environment and allows your Lambda/API CORS rules to be tested with the local origin.</p>
+  </div>
+
+  <div class="section">
+    <h2>Summary / Tips</h2>
+    <ul>
+      <li>Always include both your live domain and <code>localhost</code> in CORS headers for testing.</li>
+      <li>Use <code>preventDefault()</code> in forms to avoid page reloads and allow proper API feedback.</li>
+      <li>Test APIs with both local and live origins before deploying.</li>
+      <li>This approach ensures a smooth user experience and helps future developers avoid CORS issues.</li>
+    </ul>
+  </div>
+</body>
+</html>
