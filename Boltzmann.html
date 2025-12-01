@@ -134,6 +134,29 @@
     
 </div>
 
+    <section>
+    <h2>5. Random Past Generator</h2>
+    <p>Click to generate a playful, imaginary past — a nod to the Boltzmann Brain idea.</p>
+
+    <button id="generateBtn">Generate Random Past</button>
+    <div id="result">Your random past will appear here...</div>
+  </section>
+
+  <script>
+    const options = [
+      "You once captained a tiny spacecraft made from recycled kettles.",
+      "You won a school talent show with a dance you invented by accident.",
+      "You helped a lost cat find its home during a thunderstorm.",
+      "You spent a whole summer talking to clouds — and they talked back.",
+      "You discovered a secret room in your childhood home that nobody else remembered.",
+      "You nearly invented time travel using only string, a saucepan, and fierce determination."
+    ];
+
+    document.getElementById("generateBtn").addEventListener("click", () => {
+      const random = options[Math.floor(Math.random() * options.length)];
+      document.getElementById("result").textContent = random;
+    });
+  </script>
 </body>
 
 <hr>
