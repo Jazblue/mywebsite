@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Serverless API with AWS CloudFormation</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; color: #2c3e50; background-color: #fdfdfd; }
+    h1, h2 { color: #34495e; }
+    pre { background: #f4f4f4; padding: 10px; border-radius: 5px; overflow-x: auto; }
+    code { background: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
+    a { color: #3498db; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    ul { margin-bottom: 20px; }
+    section { margin-bottom: 30px; }
+  </style>
+</head>
+<body>
+  <h1>Serverless API with AWS CloudFormation</h1>
+
+  <section>
+    <p>This project is a **fully serverless CRUD API** deployed entirely with <strong>AWS CloudFormation</strong>. It demonstrates end-to-end AWS skills including Lambda, DynamoDB, API Gateway, and IAM roles, using infrastructure-as-code to create a production-ready API.</p>
+  </section>
+
+<section>
+  <h2>Me using Cloudformation</h2>
+  <img src="Cloudformation.png" alt="CloudFormation Serverless API Diagram" style="max-width:100%; height:auto;">
+</section>
+
+<p> This was the code that I used to deploy via windows cmd aws cloudformation deploy --stack-name serverless-api --template-file template.yml --capabilities CAPABILITY_NAMED_IAM --parameter-overrides EnvironmentName=dev </p>
+
+<section>
+  <h2>Completed uploading the Cloudformation</h2>
+  <img src="cloudformation2.png" alt="CloudFormation Serverless API Diagram" style="max-width:100%; height:auto;">
+</section>
+
+
+<section>
+  <h2>Showing some of the events in Cloudformation</h2>
+  <img src="cloudformationstack.png" alt="CloudFormation Serverless API Diagram" style="max-width:100%; height:auto;">
+</section>
+
+
+
+
+
+  <section>
+    <h2>Architecture</h2>
+    <pre>
+          +-------------------+
+          |   API Gateway     |
+          |  /items endpoints |
+          +---------+---------+
+                    |
+          +---------v---------+
+          |     Lambda        |
+          |  (Python 3.10)   |
+          +---+-----+----+---+
+              |     |    |
+    +---------v+   v+   v---------+
+    | CreateItemLambda            |
+    | GetItemLambda               |
+    | GetAllItemsLambda           |
+    | DeleteItemLambda            |
+    +-----------------------------+
+              |
+              v
+       +--------------+
+       |  DynamoDB    |
+       |  ItemsTable  |
+       +--------------+
+    </pre>
+  </section>
+
+  <section>
+    <h2>Features</h2>
+    <ul>
+      <li>Create, read, and delete items via REST API</li>
+      <li>Serverless compute using Python 3.10 Lambda functions</li>
+      <li>API Gateway routes HTTP requests to Lambdas</li>
+      <li>Least-privilege IAM roles and CloudWatch logging</li>
+      <li>Fully deployable with a single CloudFormation template</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>API Endpoints Examples (curl)</h2>
+    <pre>
+# Create an item
+curl -X POST "https://&lt;api-id&gt;.execute-api.&lt;region&gt;.amazonaws.com/prod/items" ^
+-H "Content-Type: application/json" ^
+-d "{\"id\":\"1\",\"data\":\"Example item\"}"
+
+# Get a single item
+curl "https://&lt;api-id&gt;.execute-api.&lt;region&gt;.amazonaws.com/prod/items?id=1"
+
+# Get all items
+curl "https://&lt;api-id&gt;.execute-api.&lt;region&gt;.amazonaws.com/prod/items"
+
+# Delete an item
+curl -X DELETE "https://&lt;api-id&gt;.execute-api.&lt;region&gt;.amazonaws.com/prod/items?id=1"
+    </pre>
+  </section>
+
+<section>
+  <h2>Me showing all the 4 endpoints working</h2>
+  <img src="curl.png" alt="CloudFormation Serverless API Diagram" style="max-width:100%; height:auto;">
+</section>
+
+<section>
+  <h2>Showing the dynambo db database</h2>
+  <img src="dynambodb.png" alt="CloudFormation Serverless API Diagram" style="max-width:100%; height:auto;">
+</section>
+
+<section>
+  <h2>Showing the lambda functions</h2>
+  <img src="lambdafunctions.png" alt="CloudFormation Serverless API Diagram" style="max-width:100%; height:auto;">
+</section>
+
+  <section>
+    <h2>GitHub Repository</h2>
+    <p>See the full source code and CloudFormation template here: <a href="https://github.com/Jazblue/serverless-api" target="_blank">serverless-api on GitHub</a></p>
+  </section>
+
+<p>On an end note we did get the Cloudformation up and running, I understood that text code didnt really help. But we finally uploaded ok. I would feel confident in uploading more projects via cli and through Cloudformation infrastructure. We did have a one permission error. Which shows in the below photo. Message forbidden. So this is when we called the endpoint, and Lambda requires permission to be invoked by API gateway or the IAM role wasnt fully configured. We saw the error in Cloudwatch [ERROR] Runtime.ImportModuleError: Unable to import module 'create_item': No module named 'create_item'. This meant Lambda couldn’t find the handler module you referenced in the template. That’s why API Gateway returned 403/Forbidden — it can invoke Lambda, but the function itself failed at runtime.</p>
+<p> How we fixed it
+
+Switched to inline Lambda code in CloudFormation, so no external Python module was needed.
+
+Updated the handler to index.lambda_handler, matching the inline function.
+
+Verified the IAM role had proper permissions for DynamoDB access and CloudWatch logging.
+
+After that, all curl requests returned successfully:
+
+POST → Item created
+
+GET → Item retrieved
+
+DELETE → Item deleted
+
+</p>
+
+<section>
+  <h2>The permissions error </h2>
+  <img src="permissionerror.png" alt="CloudFormation Serverless API Diagram" style="max-width:100%; height:auto;">
+</section>
+
+  <section>
+    <h2>Skills Demonstrated</h2>
+    <ul>
+      <li>AWS Lambda & Python 3.10</li>
+      <li>DynamoDB CRUD operations</li>
+      <li>API Gateway integration</li>
+      <li>IAM roles & permissions</li>
+      <li>Infrastructure-as-code with CloudFormation</li>
+      <li>Serverless best practices</li>
+    </ul>
+  </section>
+</body>
+</html>
