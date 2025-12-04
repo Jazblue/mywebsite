@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Private Serverless VPC Project</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+        header {
+            background-color: #343a40;
+            padding: 20px;
+            text-align: center;
+        }
+        header h1 {
+            color: #ffffff;
+            margin: 0;
+        }
+        section {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #343a40;
+        }
+        .quote {
+            background: #e9ecef;
+            padding: 15px;
+            border-left: 5px solid #343a40;
+            margin: 20px 0;
+            font-style: italic;
+        }
+        footer {
+            background-color: #343a40;
+            color: #ffffff;
+            text-align: center;
+            padding: 12px;
+            margin-top: 40px;
+        }
+        code {
+            background: #f1f1f1;
+            padding: 3px 6px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>My Private Serverless VPC Project</h1>
+</header>
+
+<section>
+    <h2>What I Wanted to Build</h2>
+    <p>
+        My goal was to create a secure AWS serverless application running inside a private network. 
+        I wanted AWS Lambda functions to communicate with DynamoDB without exposing anything to the public internet.
+    </p>
+</section>
+
+<section>
+    <h2>The Problem I Faced</h2>
+    <p>
+        When I deployed my CloudFormation template, it kept failing. I spent hours reading docs, switching between examples, 
+        and wondering whether I needed a NAT Gateway, an Internet Gateway, or both. 
+    </p>
+
+    <div class="quote">
+        “I was going back and forth, researching, tweaking the template, redeploying over and over…
+        nothing seemed to work. The stack failed every time.”
+    </div>
+</section>
+
+<section>
+    <h2>The Breakthrough</h2>
+    <p>
+        After digging deeper, I realised something important:
+    </p>
+    <p>
+        <strong>I didn’t need an Internet Gateway at all.</strong><br>
+        I only needed a <strong>VPC Gateway Endpoint</strong> for DynamoDB.
+    </p>
+
+    <p>
+        That single change meant Lambda could talk to DynamoDB privately, inside the VPC, without 
+        any public route. No NAT costs. No public access. Fully secure.
+    </p>
+</section>
+
+<section>
+    <h2>What the Final Architecture Achieved</h2>
+    <ul>
+        <li>Lambda runs inside private subnets</li>
+        <li>DynamoDB access is private via a Gateway Endpoint</li>
+        <li>No Internet Gateway required</li>
+        <li>No NAT Gateway cost</li>
+        <li>More secure by default</li>
+    </ul>
+
+    <p>
+        This architecture follows AWS best practices for private serverless networking and costs nothing extra to operate.
+    </p>
+</section>
+
+<section>
+    <h2>Key Lesson</h2>
+    <p>
+        Private doesn’t mean complicated — it means understanding the difference between 
+        <code>Gateway Endpoint</code> and <code>Internet Gateway</code>.
+    </p>
+
+    <div class="quote">
+        “I thought I needed the internet. In the end, the most secure solution required
+        staying private all along.”
+    </div>
+</section>
+
+<footer>
+    Built by Jase — Learning AWS One Project at a Time
+</footer>
+
+</body>
+</html>
