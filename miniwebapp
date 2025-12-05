@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MiniWebApp Project - Jase</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f9f9f9; color: #333; }
+        header { background: #da291c; color: white; padding: 1em 2em; text-align: center; }
+        main { padding: 2em; max-width: 800px; margin: auto; }
+        h1, h2 { margin-bottom: 0.5em; }
+        a { color: #da291c; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .section { margin-bottom: 2em; }
+        code { background: #eee; padding: 2px 4px; border-radius: 4px; }
+        footer { text-align: center; padding: 1em; background: #222; color: white; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>MiniWebApp Project</h1>
+    <p>CloudFormation, ALB, Auto Scaling & EC2 on AWS</p>
+</header>
+
+<main>
+    <div class="section">
+        <h2>About the Project</h2>
+        <p>This project demonstrates a fully automated AWS web application deployment using CloudFormation. It includes:</p>
+        <ul>
+            <li>VPC with two public subnets across multiple Availability Zones</li>
+            <li>Internet-facing Application Load Balancer (ALB)</li>
+            <li>Auto Scaling Group (ASG) with EC2 instances running Amazon Linux 2 and Apache</li>
+            <li>Dynamic AMI retrieval via SSM for region independence</li>
+        </ul>
+        <p>The project is designed for high availability and scalability, with EC2 instances automatically replaced if unhealthy.</p>
+    </div>
+
+    <div class="section">
+        <h2>GitHub Repository</h2>
+        <p>All code, CloudFormation templates, and scripts are available on GitHub:</p>
+        <p><a href="https://github.com/Jazblue/Miniwebapp" target="_blank">https://github.com/Jazblue/Miniwebapp</a></p>
+    </div>
+
+    <div class="section">
+        <h2>Key Features Demonstrated</h2>
+        <ul>
+            <li>Infrastructure as Code (CloudFormation)</li>
+            <li>Load Balancing & Health Checks</li>
+            <li>Auto Scaling (with EC2 instance replacement)</li>
+            <li>Security groups & networking best practices</li>
+            <li>UserData scripting for automated EC2 setup</li>
+        </ul>
+        <p>SSH access to EC2 instances is possible for demonstration purposes, but the project is fully deployable without manual intervention.</p>
+    </div>
+
+    <div class="section">
+        <h2>Notes / Lessons Learned</h2>
+        <ul>
+            <li>Encountered a few challenges creating the CloudFormation stack due to AMI IDs and KeyName parameters, resolved using dynamic AMI and no SSH key.</li>
+            <li>No tagging was initially implemented — could be added for resource tracking and cost management.</li>
+            <li>Demonstrates practical AWS skills suitable for cloud architect or DevOps roles.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Live Demo</h2>
+        <p>The web page served by the stack displays a simple message:</p>
+        <code>Hello, Manchester United!</code>
+        <p>Accessible via the ALB DNS after stack creation.</p>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2025 Jase – Cloud Projects & AWS Enthusiast</p>
+</footer>
+
+</body>
+</html>
