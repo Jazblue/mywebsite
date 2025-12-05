@@ -75,6 +75,55 @@
         <code>Hello, Manchester United!</code>
         <p>Accessible via the ALB DNS after stack creation.</p>
     </div>
+
+    <section id="asg-test">
+  <h2>🚀 Auto Scaling Group (ASG) Test</h2>
+  <p>To demonstrate that the Mini Web App scales under load, we performed a simple load test against the Application Load Balancer (ALB).</p>
+
+  <p><strong>ALB URL:</strong> <a href="http://MiniWebALB-1107566933.eu-west-2.elb.amazonaws.com/" target="_blank">MiniWebALB-1107566933.eu-west-2.elb.amazonaws.com</a></p>
+
+  <h3>1️⃣ Load Test</h3>
+  <p>We used <strong>Apache Bench (ab)</strong> to simulate 500 requests with 10 concurrent connections:</p>
+
+  <pre><code>ab -n 500 -c 10 http://MiniWebALB-1107566933.eu-west-2.elb.amazonaws.com/</code></pre>
+
+  <p><strong>Results:</strong></p>
+  <ul>
+    <li>Requests completed: 500</li>
+    <li>Requests per second: ~105</li>
+    <li>Average response time: ~95 ms</li>
+    <li>Some requests failed initially — this was expected as new instances were being launched.</li>
+  </ul>
+
+  <h3>2️⃣ Auto Scaling Reaction</h3>
+  <p>The Auto Scaling Group (ASG) detected the increased load and automatically launched <strong>two new EC2 instances</strong> to handle traffic. Desired capacity changed from <strong>0 → 2</strong>, and the ALB started routing traffic to both instances.</p>
+
+  <pre><code>
+Launching a new EC2 instance: i-040f108e7af753f1d
+Launching a new EC2 instance: i-06f9bf8094de8126a
+  </code></pre>
+
+  <h3>3️⃣ Verification</h3>
+  <p>Refreshing the ALB URL in your browser shows different hostnames from multiple instances:</p>
+
+  <pre><code>
+Hello, Manchester United!
+Hostname: ip-10-0-2-237.eu-west-2.compute.internal
+AZ: eu-west-2b
+  </code></pre>
+
+  <p>This confirms <strong>traffic is distributed across multiple AZs</strong> and instances.</p>
+
+  <h3>4️⃣ Portfolio Notes</h3>
+  <ul>
+    <li>Demonstrates <strong>Auto Scaling under real load</strong>.</li>
+    <li>Shows <strong>ALB routing across multiple EC2 instances</strong>.</li>
+    <li>Proves <strong>CloudFormation deployment is working correctly</strong>.</li>
+  </ul>
+
+  <p><strong>Tip:</strong> Include a short GIF or screenshot of the hostname changing as you refresh the ALB URL — it’s visually impressive and immediately shows scaling in action.</p>
+</section>
+
 </main>
 
 <footer>
