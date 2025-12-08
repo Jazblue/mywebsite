@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My AWS Learning Journey</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0 20px;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+    h1, h2 {
+      color: #0073bb;
+    }
+    pre {
+      background: #eee;
+      padding: 10px;
+      overflow-x: auto;
+    }
+    p {
+      margin-bottom: 1em;
+    }
+    .highlight {
+      font-weight: bold;
+      color: #d9534f;
+    }
+    .github-link {
+      margin-top: 40px;
+      padding: 20px;
+      background: #0073bb;
+      color: #fff;
+      text-align: center;
+      border-radius: 8px;
+    }
+    .github-link a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .github-link a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <h1>My AWS Learning Journey</h1>
+
+  <p>I embarked on an AWS project to host a static website using <span class="highlight">S3</span>, <span class="highlight">CodePipeline</span>, and <span class="highlight">CodeBuild</span>. It was a journey full of trial and error, learning, and ultimately, success.</p>
+
+  <h2>The YAML Template Struggle</h2>
+  <p>Initially, I used a YAML template to set up the pipeline. However, it kept failing because the <span class="highlight">Deploy stage</span> to S3 was missing. I went back and forth trying to resolve the errors, reading docs, and testing configurations. Finally, I managed to add the proper deploy stage, and the pipeline ran successfully.</p>
+
+  <h2>The HTML Loading Issue</h2>
+  <p>After deployment, the website wouldn’t open correctly. The HTML file would download instead of displaying. I checked the permissions, unblocked public access, and eventually discovered that the <span class="highlight">Content-Type metadata</span> was incorrect. I deleted the file and re-uploaded it with the correct <code>text/html</code> content type. Finally, the page rendered perfectly.</p>
+
+  <h2>Manual Hosting and Learning</h2>
+  <p>To solidify my understanding, I also hosted the site manually on AWS using S3, CloudFront, Route 53, and ACM. This allowed me to apply everything I learned about static hosting, secure certificates, and CDN configuration.</p>
+
+  <h2>Reflection</h2>
+  <p>This project was a true learning experience. I gained hands-on skills with:</p>
+  <ul>
+    <li>CI/CD using CodePipeline and CodeBuild</li>
+    <li>S3 static hosting and metadata handling</li>
+    <li>Debugging pipeline and deployment errors</li>
+    <li>Manual vs automated Infrastructure-as-Code deployment</li>
+  </ul>
+  <p>Overall, it was a challenging but extremely rewarding project.</p>
+
+  <div class="github-link">
+    <p>Check out the full project README on GitHub:</p>
+    <a href="https://github.com/Jazblue/-AWS-S3-Static-Website-CodePipeline-CI-CD" target="_blank">
+      View README on GitHub
+    </a>
+  </div>
+</body>
+</html>
