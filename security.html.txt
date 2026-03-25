@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PC Security & Account Safety</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      background-color: #f4f4f4;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #2c3e50;
+      color: #fff;
+      padding: 20px 0;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2rem;
+    }
+    main {
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      color: #2c3e50;
+      margin-top: 1.5rem;
+    }
+    code, pre {
+      background: #eee;
+      padding: 5px;
+      display: block;
+      margin: 10px 0;
+      border-radius: 4px;
+      overflow-x: auto;
+    }
+    ul {
+      margin: 10px 0 10px 20px;
+    }
+    .highlight {
+      color: #e74c3c;
+      font-weight: bold;
+    }
+    footer {
+      text-align: center;
+      padding: 15px 0;
+      background: #2c3e50;
+      color: #fff;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>My PC & Account Security Experience</h1>
+  </header>
+  <main>
+    <p>Recently, I faced a serious security incident. Someone tried to access my accounts — PayPal, Steam, Google — and even attempted to take control of my PC. Here’s what happened and what I did to secure everything.</p>
+
+    <h2>Step 1: Log Out the Attacker</h2>
+    <p>I immediately cut off access using built-in Windows tools and Command Prompt (CMD):</p>
+    <pre><code>net user
+net user [username]
+net localgroup administrators
+net user [username] /active:no</code></pre>
+    <p>I also used <span class="highlight">netplwiz</span> (Windows + R → type <code>netplwiz</code>) to review accounts, attempt to remove the malicious user, and make sure only trusted accounts had admin rights.</p>
+
+    <h2>Step 2: Change Passwords & Enable MFA</h2>
+    <ul>
+      <li>Changed passwords on <span class="highlight">more than ten accounts</span>, making them long and unique (15+ characters)</li>
+      <li>Enabled <span class="highlight">Multi-Factor Authentication (MFA)</span> wherever possible</li>
+    </ul>
+
+    <h2>Step 3: Boot Into Safe Mode & Scan for Malware</h2>
+    <p>Safe Mode prevents most malware from running. I did the following:</p>
+    <ul>
+      <li>Restarted the PC → F8 / Shift + Restart → selected <span class="highlight">Safe Mode</span></li>
+      <li>Ran <span class="highlight">Malwarebytes</span> for a full scan and removed <span class="highlight">over 50 trojans</span></li>
+      <li>Rebooted and re-scanned to confirm the system was clean</li>
+    </ul>
+
+    <h2>Step 4: Check & Secure All Accounts</h2>
+    <ul>
+      <li>Reviewed login alerts and unusual activity</li>
+      <li>Removed unknown devices from Google, Microsoft, and other accounts</li>
+      <li>Checked email forwarding rules and recovery emails</li>
+      <li>Ensured all accounts had strong passwords and MFA</li>
+    </ul>
+
+    <h2>Step 5: CMD & PC Security Cheat Sheet</h2>
+    <pre><code>net user
+net user [username]
+net localgroup administrators
+net user [username] /active:no
+query user
+tasklist /v
+netstat -ano</code></pre>
+    <p>Other tools:</p>
+    <ul>
+      <li><span class="highlight">netplwiz</span> → review accounts and remove malicious users</li>
+      <li>Safe Mode + Malwarebytes → clean malware</li>
+    </ul>
+
+    <h2>Key Lessons Learned</h2>
+    <ul>
+      <li>Use long, strong passwords (15+ characters)</li>
+      <li>Enable MFA on every account</li>
+      <li>Regularly scan your PC for malware</li>
+      <li>Use Safe Mode + CMD tools + netplwiz to check and remove suspicious users</li>
+      <li>Act immediately if you notice unusual activity</li>
+      <li>Repeat scans and checks to ensure your system remains clean</li>
+    </ul>
+
+    <h2>Final Advice</h2>
+    <p>Online security is a continuous habit. Regularly update passwords, enable MFA, scan your PC, check admin accounts, and stay alert. Quick and thorough action can save you from serious data loss and account compromise.</p>
+  </main>
+  <footer>
+    &copy; 2026 Jase – Stay Safe Online
+  </footer>
+</body>
+</html>
