@@ -1,0 +1,7 @@
+# Robots.txt for jazblue.github.io/mywebsite
+# Allow all content to be indexed
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://jazblue.github.io/mywebsite/sitemap.xml

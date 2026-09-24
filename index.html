@@ -69,7 +69,65 @@
     a:hover {
       text-decoration: underline;
     }
-  </style>
+  
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+    .project-card {
+      background: #f8f9fa;
+      border-radius: 8px;
+      padding: 1.5rem;
+      border: 1px solid #eee;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .project-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+    }
+    .project-card h3 {
+      color: #1f2937;
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+      font-size: 1.25rem;
+    }
+    .project-card p {
+      color: #555;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+    .project-tag {
+      display: inline-block;
+      background: #e3f2fd;
+      color: #1976d2;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: center;
+      margin: 2rem 0;
+    }
+    .nav-links a {
+      background: #f0f7ff;
+      color: #1976d2;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      border: 1px solid #d0e7ff;
+    }
+    .nav-links a:hover {
+      background: #e3f2fd;
+    }
+</style>
 </head>
 <body>
   <header>
@@ -101,47 +159,94 @@
   Your browser does not support the video tag.
 </video>
     </section>
-  </main>
+  
+    <section>
+      <h2>Additional Resources</h2>
+      <div class="nav-links">
+        <a href="https://jasoncv.click" target="_blank">🌐 My Main Website</a>
+        <a href="https://jaystek.wordpress.com" target="_blank">📝 My Tech Blog</a>
+        <a href="findawscred.html">🔐 AWS Security & Credentials Guide</a>
+        <a href="https://jazblue.github.io/artwork/">🎨 Artwork Portfolio</a>
+        <a href="githubcicd.html">⚙️ GitHub CI/CD Automation</a>
+        <a href="cors.html">🔧 CORS Challenges & Solutions</a>
+        <a href="Boltzmann.html">💭 Thought Provoking Page</a>
+        <a href="webproject.html">🧪 CRUD API Notes Client (Interactive)</a>
+        <a href="security.html">🛡️ Personal Security Event</a>
+        <a href="https://github.com/Jazblue" target="_blank">📂 GitHub Repositories</a>
+      </div>
+    </section>
+    
+    <section>
+      <h2>Follow My Journey</h2>
+      <p>
+        I'll be regularly updating this page with new projects and technical posts as I continue growing in cloud architecture. Stay tuned, and feel free to connect or explore my repositories on <a href="https://github.com/" target="_blank">GitHub</a>.
+      </p>
+    </section>
+</main>
     
 
     <section>
-      <h2>Upcoming Projects</h2>
-      <ul>
-        <li>🧠 AWS DynamoDB + Lambda API project</li>
-        <li>⚙️ AWS Multi-account architecture with Terraform</li>
-        <li>📊 Manchester United Match Analysis App using AWS services</li>
-      </ul>
-    </section>
 
-   <section>
-      <h2>Follow My Journey</h2>
-      <p>
-        I’ll be regularly updating this page with new projects and technical posts as I continue growing in cloud architecture. Stay tuned, and feel free to connect or explore my repositories on <a href="https://github.com/" target="_blank">GitHub</a>.
-      </p>
-      <nav>
-        <a href="https://jazblue.github.io/mywebsite/index.html">Home</a>
-        <a href="https://jazblue.github.io/mywebsite/findawscred.html">AWS Security & Credentials</a>
-        <a href="https://jazblue.github.io/artwork/">Artwork</a> 
-        <a href="https://jazblue.github.io/mywebsite/twomessageservices.html">Comparision of using two messages services within AWS that I created</a>
-        <a href="https://Jazblue.github.io/mywebsite/githubcicd.html">This is my CI/CD of uploading my Websites from Github to AWS. Without logging into AWS</a>
-        <a href="https://Jazblue.github.io/mywebsite/crossregionreplication">Cross region replication</a>
-        <a href="https://Jazblue.github.io/mywebsite/ragagentsarchitect.html">The two retrieval augmentated generation (RAG) architectures</a>
-        <a href="https://Jazblue.github.io/mywebsite/containers.html">My first try at ECS. Uploading a Container to ECS fargate</a>
-        <a href="https://Jazblue.github.io/mywebsite/serverlessnote.html">Serverless back end problems. A notes app Serverless production</a>
-        <a href="https://Jazblue.github.io/mywebsite/webproject.html">A note taking app that utilises Dynambo db, API Gateway and Lambda. Although not fully to what I want, a work in progress, so functions may not work completely.</a>
-        <a href="https://Jazblue.github.io/mywebsite/cors.html">My frustrations with Cors and my homepage</a>
-        <a href="https://Jazblue.github.io/mywebsite/Boltzmann.html">My Thought provoking page </a>
-        <a href="https://Jazblue.github.io/mywebsite/cloudformation.html">Built a Serverless API (Lambda + DynamoDB) deployed fully with CloudFormation </a>
-        <a href="https://Jazblue.github.io/mywebsite/privatecloud.html">Using Cloudformation on AWS to create a private network </a>
-        <a href="https://jazblue.github.io/mywebsite/miniwebapp.html">Using Cloudformation on AWS to create a Server that is across to availability zones so shows high resillience </a>
-        <a href="https://jazblue.github.io/mywebsite/s3project.html"> This project is a hands-on AWS learning experience where I built a static website hosted on S3 and deployed it automatically using CodePipeline and CodeBuild. </a>
-       
+    <section>
+      <h2>AWS Projects & Case Studies</h2>
+      <p>Explore my hands-on AWS projects demonstrating practical cloud architecture skills:</p>
+      <div class="project-grid">
+        <div class="project-card">
+          <h3>Serverless API with CloudFormation</h3>
+          <p><span class="project-tag">Lambda</span> <span class="project-tag">DynamoDB</span> <span class="project-tag">API Gateway</span> <span class="project-tag">CloudFormation</span></p>
+          <p>A fully serverless CRUD API deployed entirely with AWS CloudFormation, demonstrating Lambda, DynamoDB, API Gateway, and IAM roles using infrastructure-as-code.</p>
+          <a href="cloudformation.html" style="color: #1976d2; text-decoration: none; font-weight: 500;">View Project Details →</a>
+        </div>
 
-<p>
-  <a href="https://jazblue.github.io/mywebsite/security.html"> This happened to me, my security event </a>
-        
-        
-      </nav>
+        <div class="project-card">
+          <h3>Private Serverless VPC</h3>
+          <p><span class="project-tag">Lambda</span> <span class="project-tag">VPC</span> <span class="project-tag">DynamoDB</span> <span class="project-tag">Security</span></p>
+          <p>A secure AWS serverless application running inside a private network where Lambda functions communicate with DynamoDB without public internet exposure.</p>
+          <a href="privatecloud.html" style="color: #1976d2; text-decoration: none; font-weight: 500;">View Project Details →</a>
+        </div>
+
+        <div class="project-card">
+          <h3>Retrieval-Augmented Generation (RAG)</h3>
+          <p><span class="project-tag">Lambda</span> <span class="project-tag">Pinecone</span> <span class="project-tag">Gemini</span> <span class="project-tag">AI</span></p>
+          <p>Two RAG implementations: enterprise-grade with Pinecone vector database and a basic implementation using Gemini API with custom knowledge base.</p>
+          <a href="ragagentsarchitect.html" style="color: #1976d2; text-decoration: none; font-weight: 500;">View Project Details →</a>
+        </div>
+
+        <div class="project-card">
+          <h3>ECS Fargate Deployment</h3>
+          <p><span class="project-tag">ECS</span> <span class="project-tag">Fargate</span> <span class="project-tag">EC2</span> <span class="project-tag">Containers</span></p>
+          <p>Containerized Python FastAPI microservice deployed on AWS Elastic Container Service using Fargate launch type with ECR, IAM, VPC networking.</p>
+          <a href="containers.html" style="color: #1976d2; text-decoration: none; font-weight: 500;">View Project Details →</a>
+        </div>
+
+        <div class="project-card">
+          <h3>Multi-Tier Web Application</h3>
+          <p><span class="project-tag">CloudFormation</span> <span class="project-tag">ALB</span> <span class="project-tag">Auto Scaling</span> <span class="project-tag">EC2</span></p>
+          <p>Fully automated AWS web application deployment using CloudFormation with VPC, Application Load Balancer, Auto Scaling Group, and EC2 instances across multiple AZs.</p>
+          <a href="miniwebapp.html" style="color: #1976d2; text-decoration: none; font-weight: 500;">View Project Details →</a>
+        </div>
+
+        <div class="project-card">
+          <h3>Serverless Notes Application</h3>
+          <p><span class="project-tag">Lambda</span> <span class="project-tag">DynamoDB</span> <span class="project-tag">API Gateway</span> <span class="project-tag">Debugging</span></p>
+          <p>A reliable, low-cost serverless notes management service built on API Gateway + Lambda + DynamoDB with detailed deployment troubleshooting journey.</p>
+          <a href="serverlessnote.html" style="color: #1976d2; text-decoration: none; font-weight: 500;">View Project Details →</a>
+        </div>
+
+        <div class="project-card">
+          <h3>S3 Static Website Pipeline</h3>
+          <p><span class="project-tag">S3</span> <span class="project-tag">CodePipeline</span> <span class="project-tag">CodeBuild</span> <span class="project-tag">CI/CD</span></p>
+          <p>Hands-on AWS learning experience building a static website hosted on S3 and deployed automatically using CodePipeline and CodeBuild.</p>
+          <a href="s3project.html" style="color: #1976d2; text-decoration: none; font-weight: 500;">View Project Details →</a>
+        </div>
+
+        <div class="project-card">
+          <h3>Cross-Region S3 Replication</h3>
+          <p><span class="project-tag">S3</span> <span class="project-tag">IAM</span> <span class="project-tag">Replication</span> <span class="project-tag">Storage</span></p>
+          <p>AWS S3 Cross‑Region Replication learning journey demonstrating persistence, IAM role configuration, and cross-account/cross-region setup.</p>
+          <a href="crossregionreplication.html" style="color: #1976d2; text-decoration: none; font-weight: 500;">View Project Details →</a>
+        </div>
+      </div>
     </section>
   </main>
 
