@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="AWS Cloud Projects & Portfolio - Hands-on AWS projects demonstrating practical cloud architecture skills including serverless, containers, CI/CD, and infrastructure-as-code." />
+  <link rel="canonical" href="https://jazblue.github.io/mywebsite/projects.html" />
+  <meta property="og:title" content="AWS Cloud Projects & Portfolio" />
+  <meta property="og:description" content="Explore my hands-on AWS projects demonstrating practical cloud architecture skills including serverless, containers, CI/CD, and infrastructure-as-code." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://jazblue.github.io/mywebsite/projects.html" />
+  <meta property="og:image" content="https://jazblue.github.io/mywebsite/Cloudformation.PNG" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="AWS Cloud Projects & Portfolio" />
+  <meta name="twitter:description" content="Hands-on AWS projects demonstrating practical cloud architecture skills." />
+  <meta name="twitter:image" content="https://jazblue.github.io/mywebsite/Cloudformation.PNG" />
+  <link rel="alternate" type="text/html" hreflang="en" href="https://jazblue.github.io/mywebsite/projects.html" />
+  <link rel="preconnect" href="https://jazblue.github.io" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "AWS Cloud Projects Portfolio",
+    "description": "Hands-on AWS projects demonstrating practical cloud architecture skills",
+    "numberOfItems": 8,
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "item": {
+          "@type": "TechArticle",
+          "name": "Serverless API with CloudFormation",
+          "description": "A fully serverless CRUD API deployed entirely with AWS CloudFormation, demonstrating Lambda, DynamoDB, API Gateway, and IAM roles using infrastructure-as-code.",
+          "url": "https://jazblue.github.io/mywebsite/cloudformation.html"
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "item": {
+          "@type": "TechArticle",
+          "name": "Private Serverless VPC",
+          "description": "A secure AWS serverless application running inside a private network where Lambda functions communicate with DynamoDB without public internet exposure.",
+          "url": "https://jazblue.github.io/mywebsite/privatecloud.html"
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "item": {
+          "@type": "TechArticle",
+          "name": "Retrieval-Augmented Generation (RAG)",
+          "description": "Two RAG implementations: enterprise-grade with Pinecone vector database and a basic implementation using Gemini API with custom knowledge base.",
+          "url": "https://jazblue.github.io/mywebsite/ragagentsarchitect.html"
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "item": {
+          "@type": "TechArticle",
+          "name": "ECS Fargate Deployment",
+          "description": "Containerized Python FastAPI microservice deployed on AWS Elastic Container Service using Fargate launch type with ECR, IAM, VPC networking.",
+          "url": "https://jazblue.github.io/mywebsite/containers.html"
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 5,
+        "item": {
+          "@type": "TechArticle",
+          "name": "Multi-Tier Web Application",
+          "description": "Fully automated AWS web application deployment using CloudFormation with VPC, Application Load Balancer, Auto Scaling Group, and EC2 instances across multiple AZs.",
+          "url": "https://jazblue.github.io/mywebsite/miniwebapp.html"
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 6,
+        "item": {
+          "@type": "TechArticle",
+          "name": "Serverless Notes Application",
+          "description": "A reliable, low-cost serverless notes management service built on API Gateway + Lambda + DynamoDB with detailed deployment troubleshooting journey.",
+          "url": "https://jazblue.github.io/mywebsite/serverlessnote.html"
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 7,
+        "item": {
+          "@type": "TechArticle",
+          "name": "S3 Static Website Pipeline",
+          "description": "Hands-on AWS learning experience building a static website hosted on S3 and deployed automatically using CodePipeline and CodeBuild.",
+          "url": "https://jazblue.github.io/mywebsite/s3project.html"
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 8,
+        "item": {
+          "@type": "TechArticle",
+          "name": "Cross-Region S3 Replication",
+          "description": "AWS S3 Cross‑Region Replication learning journey demonstrating persistence, IAM role configuration, and cross-account/cross-region setup.",
+          "url": "https://jazblue.github.io/mywebsite/crossregionreplication.html"
+        }
+      }
+    ]
+  }
+  </script>
+  <title>AWS Cloud Projects & Portfolio</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      margin: 0;
+      background-color: #f5f7fa;
+      color: #333;
+    }
+    header {
+      background-color: #1f2937;
+      color: #fff;
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+    header h1 {
+      margin-bottom: 0.3rem;
+    }
+    header p {
+      margin-top: 0;
+      font-size: 1.1rem;
+      color: #d1d5db;
+    }
+    main {
+      max-width: 900px;
+      margin: 2rem auto;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    h2 {
+      color: #1f2937;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      color: #6b7280;
+      font-size: 0.9rem;
+    }
+    a {
+      color: #2563eb;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+    .project-card {
+      background: #f8f9fa;
+      border-radius: 8px;
+      padding: 1.5rem;
+      border: 1px solid #eee;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .project-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+    }
+    .project-card h3 {
+      color: #1f2937;
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+      font-size: 1.25rem;
+    }
+    .project-card p {
+      color: #555;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+    .project-tag {
+      display: inline-block;
+      background: #e3f2fd;
+      color: #1976d2;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .project-links {
+      margin-top: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .project-links a {
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+    .back-link {
+      display: inline-block;
+      margin-bottom: 1.5rem;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>AWS Cloud Projects & Portfolio</h1>
+    <p>Hands-on AWS projects demonstrating practical cloud architecture skills</p>
+  </header>
+
+  <main>
+    <a href="index.html" class="back-link">← Back to Home</a>
+
+    <section>
+      <h2>About This Page</h2>
+      <p>
+        This page brings together my hands-on AWS and cloud projects developed while building practical cloud engineering skills.
+        Each project below represents a real implementation — from serverless APIs and containerized microservices to
+        infrastructure-as-code deployments and CI/CD pipelines. I'm currently AWS Cloud Practitioner certified and
+        preparing for the AWS Solutions Architect Associate exam.
+      </p>
+    </section>
+
+    <section>
+      <h2>Projects</h2>
+      <div class="project-grid">
+        <div class="project-card">
+          <h3>Serverless API with CloudFormation</h3>
+          <p>
+            <span class="project-tag">Lambda</span>
+            <span class="project-tag">DynamoDB</span>
+            <span class="project-tag">API Gateway</span>
+            <span class="project-tag">CloudFormation</span>
+          </p>
+          <p>A fully serverless CRUD API deployed entirely with AWS CloudFormation, demonstrating Lambda, DynamoDB, API Gateway, and IAM roles using infrastructure-as-code.</p>
+          <div class="project-links">
+            <a href="cloudformation.html">View Details →</a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <h3>Private Serverless VPC</h3>
+          <p>
+            <span class="project-tag">Lambda</span>
+            <span class="project-tag">VPC</span>
+            <span class="project-tag">DynamoDB</span>
+            <span class="project-tag">Security</span>
+          </p>
+          <p>A secure AWS serverless application running inside a private network where Lambda functions communicate with DynamoDB without public internet exposure.</p>
+          <div class="project-links">
+            <a href="privatecloud.html">View Details →</a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <h3>Retrieval-Augmented Generation (RAG)</h3>
+          <p>
+            <span class="project-tag">Lambda</span>
+            <span class="project-tag">Pinecone</span>
+            <span class="project-tag">Gemini</span>
+            <span class="project-tag">AI</span>
+          </p>
+          <p>Two RAG implementations: enterprise-grade with Pinecone vector database and a basic implementation using Gemini API with custom knowledge base.</p>
+          <div class="project-links">
+            <a href="ragagentsarchitect.html">View Details →</a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <h3>ECS Fargate Deployment</h3>
+          <p>
+            <span class="project-tag">ECS</span>
+            <span class="project-tag">Fargate</span>
+            <span class="project-tag">EC2</span>
+            <span class="project-tag">Containers</span>
+          </p>
+          <p>Containerized Python FastAPI microservice deployed on AWS Elastic Container Service using Fargate launch type with ECR, IAM, VPC networking.</p>
+          <div class="project-links">
+            <a href="containers.html">View Details →</a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <h3>Multi-Tier Web Application</h3>
+          <p>
+            <span class="project-tag">CloudFormation</span>
+            <span class="project-tag">ALB</span>
+            <span class="project-tag">Auto Scaling</span>
+            <span class="project-tag">EC2</span>
+          </p>
+          <p>Fully automated AWS web application deployment using CloudFormation with VPC, Application Load Balancer, Auto Scaling Group, and EC2 instances across multiple AZs.</p>
+          <div class="project-links">
+            <a href="miniwebapp.html">View Details →</a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <h3>Serverless Notes Application</h3>
+          <p>
+            <span class="project-tag">Lambda</span>
+            <span class="project-tag">DynamoDB</span>
+            <span class="project-tag">API Gateway</span>
+            <span class="project-tag">Debugging</span>
+          </p>
+          <p>A reliable, low-cost serverless notes management service built on API Gateway + Lambda + DynamoDB with detailed deployment troubleshooting journey.</p>
+          <div class="project-links">
+            <a href="serverlessnote.html">View Details →</a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <h3>S3 Static Website Pipeline</h3>
+          <p>
+            <span class="project-tag">S3</span>
+            <span class="project-tag">CodePipeline</span>
+            <span class="project-tag">CodeBuild</span>
+            <span class="project-tag">CI/CD</span>
+          </p>
+          <p>Hands-on AWS learning experience building a static website hosted on S3 and deployed automatically using CodePipeline and CodeBuild.</p>
+          <div class="project-links">
+            <a href="s3project.html">View Details →</a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <h3>Cross-Region S3 Replication</h3>
+          <p>
+            <span class="project-tag">S3</span>
+            <span class="project-tag">IAM</span>
+            <span class="project-tag">Replication</span>
+            <span class="project-tag">Storage</span>
+          </p>
+          <p>AWS S3 Cross‑Region Replication learning journey demonstrating persistence, IAM role configuration, and cross-account/cross-region setup.</p>
+          <div class="project-links">
+            <a href="crossregionreplication.html">View Details →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Skills Demonstrated</h2>
+      <p>Across these projects, I've worked with:</p>
+      <div class="project-tags" style="margin: 1rem 0;">
+        <span class="project-tag">AWS Lambda</span>
+        <span class="project-tag">Amazon DynamoDB</span>
+        <span class="project-tag">Amazon API Gateway</span>
+        <span class="project-tag">AWS CloudFormation</span>
+        <span class="project-tag">Amazon ECS / Fargate</span>
+        <span class="project-tag">Amazon S3</span>
+        <span class="project-tag">AWS CodePipeline</span>
+        <span class="project-tag">AWS CodeBuild</span>
+        <span class="project-tag">Application Load Balancer</span>
+        <span class="project-tag">Auto Scaling</span>
+        <span class="project-tag">Amazon VPC</span>
+        <span class="project-tag">IAM Roles & Policies</span>
+        <span class="project-tag">Cross-Region Replication</span>
+        <span class="project-tag">Pinecone Vector DB</span>
+        <span class="project-tag">Google Gemini API</span>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Jase | Built with ❤️ on GitHub Pages</p>
+    <p style="margin-top:10px;color:#6b7280;font-size:0.9rem;">Visitors: <span id="visitor-count">loading…</span></p>
+    <noscript><span style="color:#6b7280;font-size:0.8rem;">(enable JavaScript to see live count)</span></noscript>
+  </footer>
+
+  <script src="counter.js"></script>
+</body>
+</html>
