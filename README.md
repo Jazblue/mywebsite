@@ -2,7 +2,7 @@
 My home page for Jazblue. local projects and AWS
 ](https://jazblue.github.io/mywebsite/)
 
-After a decade of mastering customer service and two years in IT Helpdesk roles, I am now channeling that problem-solving mindset into the AWS ecosystem. I don't just want to build infrastructure; I want to build resilient, scalable solutions that solve real-world business problems.
+After a decade of professional customer service and two years in professional IT Helpdesk roles, I am now channeling that problem-solving mindset into hands-on AWS ecosystem learning through personal projects. I don't just want to build infrastructure; I want to build resilient, scalable solutions that solve real-world business problems.
 
 Currently, I am deep-diving into the AWS Solutions Architect Associate (SAA-C03) curriculum, moving from "how it works" to "how to architect it for the enterprise."
 
@@ -29,6 +29,6 @@ RAG Architectures: Experimenting with Retrieval Augmented Generation to bridge L
 Containerization: Deploying scalable workloads using AWS ECS Fargate.
 📈 Learning Roadmap
  AWS Cloud Practitioner (Certified)
- AWS Solutions Architect Associate (In Progress)
+ AWS Solutions Architect – Associate (SAA-C03) — Currently Studying
  HashiCorp Terraform Associate (Upcoming)
 “The goal isn't just to pass the exam, but to build the solution.”
