@@ -266,71 +266,12 @@
             border: 1px solid #e2e8f0;
         }
 
-        .timeline {
-            position: relative;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 20px;
-            top: 0;
-            bottom: 0;
-            width: 4px;
-            background: var(--primary);
-            border-radius: 2px;
-        }
-
-        .timeline-item {
-            position: relative;
-            padding-left: 60px;
-            margin-bottom: 3rem;
-        }
-
-        .timeline-item h4 {
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .timeline-item .date {
-            display: block;
-            color: var(--text-light);
-            font-weight: 500;
-            margin-bottom: 1rem;
-        }
-
-        .timeline-item p {
-            color: var(--text-light);
-            line-height: 1.7;
-        }
-
         .cta-section {
             text-align: center;
             padding: 4rem 2rem;
             background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
             border-radius: var(--radius);
             border: 2px solid var(--primary);
-        }
-
-        .cta-section h2 {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .cta-section p {
-            max-width: 600px;
-            margin: 0 auto 2rem auto;
-            color: var(--text-light);
-            line-height: 1.7;
-        }
-
-        .cta-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            flex-wrap: wrap;
         }
 
         footer {
@@ -340,10 +281,6 @@
             color: var(--text-light);
             font-size: 0.95rem;
             border-top: 1px solid var(--border);
-        }
-
-        .footer-links {
-            margin-top: 1.5rem;
         }
 
         .footer-links a {
@@ -362,28 +299,22 @@
             .container {
                 padding: 1rem;
             }
-
             header {
                 padding: 2rem 1rem;
             }
-
             header h1 {
                 font-size: 2rem;
             }
-
             header .subtitle {
                 font-size: 1.25rem;
             }
-
             .hero-buttons {
                 flex-direction: column;
                 align-items: center;
             }
-
             .section-title {
                 font-size: 1.75rem;
             }
-
             .cards-4, .cards-3, .cards-2 {
                 grid-template-columns: 1fr;
             }
@@ -468,28 +399,28 @@
                     <h3>Bedrock Document Intelligence</h3>
                     <p>An AI-powered document analysis system using Amazon Bedrock to analyse documents stored in Amazon S3 and persist structured analysis results in DynamoDB.</p>
                     <div class="tags">
-                                            <span class="tag">Amazon Bedrock</span>
-                                            <span class="tag">S3</span>
-                                            <span class="tag">DynamoDB</span>
-                                            <span class="tag">Python</span>
-                                            <span class="tag">Flask</span>
-                                        </div>
-                                        <a href="https://github.com/Jazblue/bedrock-document-intelligence" target="_blank" class="btn btn-primary" style="width: 100%; text-align: center;">View Project Details</a>
-                                    </div>
+                        <span class="tag">Amazon Bedrock</span>
+                        <span class="tag">S3</span>
+                        <span class="tag">DynamoDB</span>
+                        <span class="tag">Python</span>
+                        <span class="tag">Flask</span>
+                    </div>
+                    <a href="https://github.com/Jazblue/bedrock-document-intelligence" target="_blank" class="btn btn-primary" style="width: 100%; text-align: center;">View Project Details</a>
+                </div>
                 <div class="card featured-card">
                     <h3>AWS Networking Lab</h3>
                     <p>Hands-on AWS networking work exploring public and private subnets, routing, Internet Gateway and NAT connectivity, security controls and the architecture decisions required to connect resources securely.</p>
                     <p><strong>Additional description:</strong> Built to move beyond memorising AWS networking components and develop practical understanding of how they work together.</p>
                     <div class="tags">
-                                            <span class="tag">VPC</span>
-                                            <span class="tag">Subnets</span>
-                                            <span class="tag">Route Tables</span>
-                                            <span class="tag">Internet Gateway</span>
-                                            <span class="tag">NAT</span>
-                                            <span class="tag">Security Groups</span>
-                                        </div>
-                                        <a href="privatecloud.html" class="btn btn-primary" style="width: 100%; text-align: center;">View Project Details</a>
-                                    </div>
+                        <span class="tag">VPC</span>
+                        <span class="tag">Subnets</span>
+                        <span class="tag">Route Tables</span>
+                        <span class="tag">Internet Gateway</span>
+                        <span class="tag">NAT</span>
+                        <span class="tag">Security Groups</span>
+                    </div>
+                    <a href="privatecloud.html" class="btn btn-primary" style="width: 100%; text-align: center;">View Project Details</a>
+                </div>
             </div>
         </section>
 
@@ -683,12 +614,41 @@
         <div style="margin-top: 2rem; text-align: center; color: #94a3b8; font-size: 0.9rem;">
             © 2026 Jason Harvey | Built with ❤️ on GitHub Pages
 
-	<!-- Footer Visitor Counter Widget -->
-<div class="footer-counter-container" style="text-align: center; margin: 20px 0; font-family: 'Courier New', Courier, monospace;">
-    <iframe src="counter.html" scrolling="no" frameborder="0" style="width: 220px; height: 90px; border: none; overflow: hidden; background: transparent;"></iframe>
-</div>
+            <!-- Retro Visitor Counter Widget -->
+            <div style="text-align: center; margin: 20px auto 0 auto; font-family: 'Courier New', Courier, monospace; background: #2b2b2b; padding: 12px; border-radius: 8px; display: inline-block; width: 220px; box-sizing: border-box;">
+                <div style="font-size: 10px; color: #aaa; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 1px;">You are visitor number</div>
+                <div id="footer-digits" style="display: flex; gap: 4px; justify-content: center; background: #000; padding: 6px; border: 2px inset #555; border-radius: 4px;"></div>
+                <div style="font-size: 8px; color: #777; margin-top: 6px; letter-spacing: 2px;">RETRO COUNTER</div>
+            </div>
         </div>
     </footer>
+
+    <script>
+        // Render retro digits dynamically
+        (function() {
+            let count = 133742;
+            const container = document.getElementById('footer-digits');
+            if (container) {
+                const countString = String(count).padStart(6, '0');
+                container.innerHTML = '';
+                for (let i = 0; i < countString.length; i++) {
+                    const box = document.createElement('div');
+                    box.style.background = 'linear-gradient(to bottom, #333 0%, #111 50%, #222 100%)';
+                    box.style.color = '#ff3b3b';
+                    box.style.fontSize = '22px';
+                    box.style.fontWeight = 'bold';
+                    box.style.width = '24px';
+                    box.style.height = '34px';
+                    box.style.display = 'flex';
+                    box.style.alignItems = 'center';
+                    box.style.justifyContent = 'center';
+                    box.style.border = '1px solid #555';
+                    box.style.borderRadius = '2px';
+                    box.innerText = countString[i];
+                    container.appendChild(box);
+                }
+            }
+        })();
+    </script>
 </body>
 </html>
-
