@@ -1,6 +1,6 @@
-[# mywebsite
-My home page for Jazblue. local projects and AWS
-](https://jazblue.github.io/mywebsite/)
+# [mywebsite](https://jazblue.github.io/mywebsite/)
+
+My home page for Jazblue. Local projects and AWS.
 
 After a decade of professional customer service and two years in professional IT Helpdesk roles, I am now channeling that problem-solving mindset into hands-on AWS ecosystem learning through personal projects. I don't just want to build infrastructure; I want to build resilient, scalable solutions that solve real-world business problems.
 
