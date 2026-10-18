@@ -102,6 +102,55 @@ AgentMail → private email inbox</div>
 <p>My own MiniCPM-V 4.7 1B test on this PC repeated parts of prompts and exposed raw reasoning markers, and its VPC explanations were not clear enough. That is evidence about the version and setup I tested—not proof that every MiniCPM variant is bad, or that an iPhone is always more powerful than a PC.</p>
 <div class="note"><strong>My conclusion:</strong> I am not giving up on AI. I am being realistic about local models on this hardware. Small models can be useful helpers for narrow, checkable tasks; they are not a drop-in replacement for a strong cloud model or a dependable AWS expert. The most valuable outcome so far has been learning to test, verify and simplify the workflow.</div>
 
+<h2>How to test a local model from Windows</h2>
+<p>This is a small, repeatable test bench for Ollama. It checks whether the model answers basic facts, follows a simple format, explains an AWS concept, and handles a small scenario. Run the same prompts against different models and compare accuracy, clarity and speed. These are manual smoke tests, not a scientific benchmark.</p>
+<h3>Step 1 — Check Ollama and your installed models</h3>
+<div class="code-sample">ollama --version
+ollama list
+ollama ps</div>
+<p><code>ollama list</code> shows downloaded models; <code>ollama ps</code> shows models currently loaded in memory.</p>
+<h3>Step 2 — Try a small Llama model</h3>
+<p>For example, Llama 3.2 1B is a compact text model. Its Ollama library listing gives the current variant and download details. It is a test candidate, not a guarantee that it will be the best model for this PC.</p>
+<div class="code-sample">ollama pull llama3.2:1b
+ollama run llama3.2:1b</div>
+<p>At the interactive prompt, enter one question at a time:</p>
+<div class="code-sample">What is the capital of France? Answer in one sentence.
+
+Explain what an Amazon VPC is in two simple sentences.
+
+A private subnet needs outbound IPv4 internet access initiated by instances, but no inbound internet connections. Which AWS component is commonly used, and where should it be placed? Explain briefly.</div>
+<p>Exit the chat with <code>/bye</code>. A small model may know the capital but still get AWS details wrong. Check technical answers against trusted AWS documentation or your study materials.</p>
+<h3>Step 3 — Run a prompt directly from PowerShell</h3>
+<p>You do not have to enter interactive chat each time. This runs one prompt and returns to PowerShell:</p>
+<div class="code-sample">ollama run llama3.2:1b "What is the capital of France? Answer in one sentence."
+ollama run llama3.2:1b "Explain Amazon S3 in two simple sentences."
+ollama run llama3.2:1b "Name three checks you would make before troubleshooting an EC2 instance that cannot reach the internet."</div>
+<p>Swap <code>llama3.2:1b</code> for a model you already have, such as <code>granite4:3b</code> or <code>qwen3:1.7b</code> (use the exact tag shown by <code>ollama list</code>).</p>
+<h3>Step 4 — Capture the answer and elapsed time</h3>
+<p>This PowerShell example saves a response to a text file and reports how long the command took. Run it in a normal PowerShell window, not inside Ollama's interactive chat:</p>
+<div class="code-sample">$model = "llama3.2:1b"
+$prompt = "What is the capital of France? Answer in one sentence."
+$timer = [System.Diagnostics.Stopwatch]::StartNew()
+$answer = ollama run $model $prompt 2>&1 | Out-String
+$timer.Stop()
+"Model: $model`nPrompt: $prompt`nElapsed: $($timer.Elapsed.TotalSeconds) seconds`n`nAnswer:`n$answer" |
+  Tee-Object -FilePath ".\llm-test-result.txt"</div>
+<p>Repeat with the same prompt and a different model, changing only the <code>$model</code> value. Timing is approximate and can vary with first-load overhead, background applications and model settings.</p>
+<h3>Step 5 — Test format-following, not just knowledge</h3>
+<p>Small models are often useful for bounded tasks, but they can also break simple instructions. Try this prompt:</p>
+<div class="code-sample">Return exactly one line of JSON with keys "capital" and "country" for the capital of France. Do not add Markdown or commentary.</div>
+<p>Check whether the response is valid JSON and contains the expected values. A script can validate the format; that does not prove the model will be accurate on harder questions.</p>
+<h3>Step 6 — Keep a simple comparison record</h3>
+<div class="model-table-wrap"><table class="model-table"><thead><tr><th>Test</th><th>Expected result</th><th>What to record</th></tr></thead><tbody>
+<tr><td>Basic fact</td><td>Paris</td><td>Correct / incorrect; response time</td></tr>
+<tr><td>Instruction following</td><td>One sentence or two sentences as requested</td><td>Followed length and format?</td></tr>
+<tr><td>JSON output</td><td>Valid JSON with requested keys and values</td><td>Valid syntax and correct values?</td></tr>
+<tr><td>AWS concept</td><td>Consistent with trusted AWS documentation</td><td>Technical accuracy, missing caveats, invented details</td></tr>
+<tr><td>AWS scenario</td><td>Reasoned answer with assumptions made clear</td><td>Correct choice and explanation, not just confidence</td></tr>
+</tbody></table></div>
+<div class="note"><strong>Important:</strong> the capital-of-France test only checks a basic fact. A model passing it does not show that it is safe or accurate for AWS architecture, security, or exam answers. Score a set of questions with known answers, keep the prompts identical across models, and verify technical claims independently.</div>
+<p>References: <a href="https://ollama.com/library/llama3.2">Llama 3.2 model library</a> · <a href="https://github.com/ollama/ollama/blob/main/docs/cli.mdx">Ollama CLI reference</a>.</p>
+
 <h2>What this demonstrates</h2>
 <ul><li>Running and testing a local LLM using Ollama.</li><li>Evaluating model output instead of assuming it is correct.</li><li>Python scripting to make a repeatable local test and report.</li><li>Troubleshooting integration boundaries between tools.</li><li>Connecting scheduled automation results to email reporting.</li></ul>
 <p>This project reflects a practical approach to learning: try the integration, investigate what fails, simplify the workflow, and keep the working result useful and honest.</p>
