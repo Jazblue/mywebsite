@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Local LLM Lab: Ollama, Granite &amp; Hermes | Jason Harvey</title>
+  <meta name="description" content="A practical local LLM experiment using Ollama and Granite 4 3B, testing AWS SAA-C03 question support and connecting Python reporting with Hermes scheduled-job monitoring.">
+  <link rel="canonical" href="https://jazblue.github.io/mywebsite/local-llm-lab.html">
+  <meta property="og:title" content="Local LLM Lab: Ollama, Granite &amp; Hermes">
+  <meta property="og:description" content="Testing a local language model and building a practical reporting workflow for Hermes cron jobs.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://jazblue.github.io/mywebsite/local-llm-lab.html">
+  <meta property="og:image" content="https://jazblue.github.io/mywebsite/images/local-llm-lab.svg">
+  <style>
+    :root{--ink:#172033;--muted:#536176;--blue:#2563eb;--line:#dbe4ef;--panel:#f5f8fc}
+    *{box-sizing:border-box}body{margin:0;font-family:Segoe UI,Arial,sans-serif;background:#f3f6fb;color:var(--ink);line-height:1.7}
+    header{background:#172033;color:white;padding:2.8rem 1.2rem;text-align:center}header p{max-width:760px;margin:.6rem auto;color:#dbeafe}
+    main{max-width:920px;margin:2rem auto;padding:0 1rem}article{background:white;border:1px solid var(--line);border-radius:16px;padding:clamp(1.2rem,4vw,2.5rem);box-shadow:0 8px 28px #15243b0d}
+    h1{line-height:1.2;margin:0}h2{margin-top:2rem;color:#1e40af;line-height:1.3}p{color:var(--muted)}.hero-image{display:block;width:100%;height:auto;border-radius:12px;border:1px solid var(--line);margin:1.5rem 0}
+    .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1rem;margin:1.2rem 0}.step{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:1rem}.step h3{margin:.1rem 0 .5rem;font-size:1.05rem}.step p{margin:0;font-size:.96rem}
+    .note{border-left:4px solid var(--blue);padding:.8rem 1rem;background:#eff6ff;border-radius:0 8px 8px 0;color:#1e3a8a}a{color:var(--blue)}.actions{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:2rem}.btn{display:inline-block;padding:.7rem 1rem;border-radius:8px;text-decoration:none;font-weight:600}.primary{background:var(--blue);color:white}.secondary{border:1px solid var(--line);background:white;color:var(--ink)}footer{text-align:center;color:#64748b;padding:1.5rem}
+  </style>
+</head>
+<body>
+<header><h1>Local LLM Lab</h1><p>Ollama · Granite 4 3B · Python · Hermes automation</p><p>A real-world experiment in local AI, practical limitations, and turning troubleshooting into a useful automation.</p></header>
+<main><article>
+<img class="hero-image" src="images/local-llm-lab.svg" alt="A desktop computer running a local language model, with data kept on the device">
+<h2>Project overview</h2>
+<p>I spent time testing whether a small language model running locally could reliably help with AWS Solutions Architect Associate (SAA-C03) practice questions. The experiment used Granite 4 3B through Ollama on my own computer, rather than relying entirely on a hosted model.</p>
+<p>The goal was to explore what a local model could do, understand its limits, and learn how to connect it to an existing automation agent. It was a learning and engineering exercise, not a claim that the model can guarantee correct exam answers.</p>
+<h2>What I worked through</h2>
+<div class="steps">
+<div class="step"><h3>1. Run locally</h3><p>Installed and tested Granite 4 3B through Ollama, then checked that a local prompt could produce a captured response.</p></div>
+<div class="step"><h3>2. Test the limits</h3><p>Evaluated the idea of using a local model for AWS exam practice. Its accuracy was not consistent enough to trust as an answer key.</p></div>
+<div class="step"><h3>3. Troubleshoot Hermes</h3><p>Worked through several issues trying to connect the model directly into Hermes. The direct integration route was more difficult than expected.</p></div>
+<div class="step"><h3>4. Build a practical script</h3><p>A Python script eventually provided a working way to run the local test and capture the output for reporting.</p></div>
+<div class="step"><h3>5. Report scheduled jobs</h3><p>Connected the reporting workflow with Hermes cron-job monitoring and AgentMail delivery to a private email inbox.</p></div>
+</div>
+<h2>Hermes daily cron report</h2>
+<p>The useful outcome was broader than the LLM test itself. The reporting workflow is intended to summarise which scheduled Hermes jobs ran during the day and identify successful runs and failures, so problems are easier to spot without manually checking every job.</p>
+<div class="note"><strong>Honest result:</strong> no tested local model was demonstrated to be 100% accurate on SAA-C03 questions. I continue to use structured practice and explanations to build my own AWS knowledge; the local model remains an experiment, not an exam authority.</div>
+<h2>What this demonstrates</h2>
+<ul><li>Running and testing a local LLM using Ollama.</li><li>Evaluating model output instead of assuming it is correct.</li><li>Python scripting to make a repeatable local test and report.</li><li>Troubleshooting integration boundaries between tools.</li><li>Connecting scheduled automation results to email reporting.</li></ul>
+<p>This project reflects a practical approach to learning: try the integration, investigate what fails, simplify the workflow, and keep the working result useful and honest.</p>
+<div class="actions"><a class="btn primary" href="https://github.com/Jazblue/mywebsite">View website repository</a><a class="btn secondary" href="https://jazblue.github.io/mywebsite/">Back to portfolio</a></div>
+</article></main><footer>Jason Harvey · AWS Cloud, AI &amp; Automation Portfolio</footer>
+</body></html>
