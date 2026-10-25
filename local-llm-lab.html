@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Local LLM Lab: Ollama, Granite &amp; Hermes | Jason Harvey</title>
+  <meta name="description" content="A practical local LLM experiment using Ollama and Granite 4 3B, testing AWS SAA-C03 question support and connecting Python reporting with Hermes scheduled-job monitoring.">
+  <link rel="canonical" href="https://jazblue.github.io/mywebsite/local-llm-lab.html">
+  <meta property="og:title" content="Local LLM Lab: Ollama, Granite &amp; Hermes">
+  <meta property="og:description" content="Testing a local language model and building a practical reporting workflow for Hermes cron jobs.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://jazblue.github.io/mywebsite/local-llm-lab.html">
+  <meta property="og:image" content="https://jazblue.github.io/mywebsite/images/local-llm-lab.svg">
+  <style>
+    :root{--ink:#172033;--muted:#536176;--blue:#2563eb;--line:#dbe4ef;--panel:#f5f8fc}
+    *{box-sizing:border-box}body{margin:0;font-family:Segoe UI,Arial,sans-serif;background:#f3f6fb;color:var(--ink);line-height:1.7}
+    header{background:#172033;color:white;padding:2.8rem 1.2rem;text-align:center}header p{max-width:760px;margin:.6rem auto;color:#dbeafe}
+    main{max-width:920px;margin:2rem auto;padding:0 1rem}article{background:white;border:1px solid var(--line);border-radius:16px;padding:clamp(1.2rem,4vw,2.5rem);box-shadow:0 8px 28px #15243b0d}
+    h1{line-height:1.2;margin:0}h2{margin-top:2rem;color:#1e40af;line-height:1.3}p{color:var(--muted)}.hero-image{display:block;width:100%;height:auto;border-radius:12px;border:1px solid var(--line);margin:1.5rem 0}
+    .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1rem;margin:1.2rem 0}.step{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:1rem}.step h3{margin:.1rem 0 .5rem;font-size:1.05rem}.step p{margin:0;font-size:.96rem}
+    .note{border-left:4px solid var(--blue);padding:.8rem 1rem;background:#eff6ff;border-radius:0 8px 8px 0;color:#1e3a8a}a{color:var(--blue)}.actions{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:2rem}.btn{display:inline-block;padding:.7rem 1rem;border-radius:8px;text-decoration:none;font-weight:600}.primary{background:var(--blue);color:white}.secondary{border:1px solid var(--line);background:white;color:var(--ink)}footer{text-align:center;color:#64748b;padding:1.5rem}
+
+    .model-table-wrap{overflow-x:auto;margin:1rem 0 1.5rem} .model-table{width:100%;border-collapse:collapse;min-width:640px;font-size:.95rem}.model-table th,.model-table td{padding:.85rem;vertical-align:top;text-align:left;border:1px solid var(--line)}.model-table th{background:#eaf1ff;color:#1e3a8a}.model-table td{color:var(--muted)}.model-table tr:nth-child(even) td{background:#f8fafc}.model-label{display:inline-block;padding:.18rem .5rem;border-radius:99px;font-size:.8rem;font-weight:700;background:#fff7ed;color:#9a3412}.model-label.good{background:#ecfdf5;color:#065f46}.code-sample{background:#111827;color:#d1fae5;padding:1rem;border-radius:10px;overflow-x:auto;font-family:Consolas,monospace;font-size:.92rem;white-space:pre-wrap}
+
+  </style>
+</head>
+<body>
+<header><h1>Local LLM Lab</h1><p>Ollama · Granite 4 3B · Python · Hermes automation</p><p>A real-world experiment in local AI, practical limitations, and turning troubleshooting into a useful automation.</p></header>
+<main><article>
+<img class="hero-image" src="images/local-llm-lab.svg" alt="A desktop computer running a local language model, with data kept on the device">
+<h2>Project overview</h2>
+<p>I spent time testing whether a small language model running locally could reliably help with AWS Solutions Architect Associate (SAA-C03) practice questions. The experiment used Granite 4 3B through Ollama on my own computer, rather than relying entirely on a hosted model.</p>
+<p>The goal was to explore what a local model could do, understand its limits, and learn how to connect it to an existing automation agent. It was a learning and engineering exercise, not a claim that the model can guarantee correct exam answers.</p>
+<h2>What I worked through</h2>
+<div class="steps">
+<div class="step"><h3>1. Run locally</h3><p>Installed and tested Granite 4 3B through Ollama, then checked that a local prompt could produce a captured response.</p></div>
+<div class="step"><h3>2. Test the limits</h3><p>Evaluated the idea of using a local model for AWS exam practice. Its accuracy was not consistent enough to trust as an answer key.</p></div>
+<div class="step"><h3>3. Troubleshoot Hermes</h3><p>Worked through several issues trying to connect the model directly into Hermes. The direct integration route was more difficult than expected.</p></div>
+<div class="step"><h3>4. Build a practical script</h3><p>A Python script eventually provided a working way to run the local test and capture the output for reporting.</p></div>
+<div class="step"><h3>5. Report scheduled jobs</h3><p>Connected the reporting workflow with Hermes cron-job monitoring and AgentMail delivery to a private email inbox.</p></div>
+</div>
+<h2>Hermes daily cron report</h2>
+<p>The useful outcome was broader than the LLM test itself. The reporting workflow is intended to summarise which scheduled Hermes jobs ran during the day and identify successful runs and failures, so problems are easier to spot without manually checking every job.</p>
+<div class="note"><strong>Honest result:</strong> no tested local model was demonstrated to be 100% accurate on SAA-C03 questions. I continue to use structured practice and explanations to build my own AWS knowledge; the local model remains an experiment, not an exam authority.</div>
+
+<h2>What are Ollama, Granite and Hermes?</h2>
+<p><strong>Ollama</strong> is the local model runner used in this experiment. It makes it possible to download and run compatible language models on a personal computer and send them prompts through a local interface. It is the tool running the model, rather than the model itself. Running locally can reduce dependence on a hosted AI service, but performance depends on the model, available memory and hardware.</p>
+<p><strong>Granite 4 3B</strong> is the language model tested here. “3B” refers to roughly three billion parameters. It was small enough to try locally and was useful for basic prompt handling, structured output and some reasoning tasks. <strong>Hermes</strong> is the automation agent in this setup: it runs scheduled jobs (cron), coordinates tools and produces reports. <strong>AgentMail</strong> was used to deliver the daily report to my private inbox.</p>
+<h2>Models tested: what worked and what did not</h2>
+<p>I compared several small models through Ollama against AWS Solutions Architect Associate (SAA-C03)-style tasks. These were practical experiments, not a statistically rigorous benchmark or an official exam score. The same broad lesson kept appearing: a response can sound confident and still contain a technical error.</p>
+<div class="model-table-wrap"><table class="model-table"><thead><tr><th>Model</th><th>What I observed</th><th>Assessment for AWS practice</th></tr></thead><tbody>
+<tr><td><strong>MiniCPM-V 4.7 1B</strong></td><td>Repeated parts of the prompt and exposed awkward raw reasoning markers such as <code>&lt;/think&gt;</code>. Its VPC explanations were clumsy and did not consistently explain the networking path clearly.</td><td><span class="model-label">Not reliable enough</span><br>Output quality and clarity needed too much checking.</td></tr>
+<tr><td><strong>Qwen3 1.7B</strong></td><td>Could complete some simple checks, including returning the expected <code>DAILY REPORT READY</code> marker and some route-selection reasoning. But some AWS practice questions were flawed, and structured JSON output became corrupted.</td><td><span class="model-label">Mixed results</span><br>Useful for simple experiments, but not dependable for generating or grading exam questions unattended.</td></tr>
+<tr><td><strong>Granite 4 3B</strong></td><td>Produced the expected structured-output marker and handled some route-selection reasoning. However, a VPC question had ambiguous options and an incorrect NAT detail; a traffic-path explanation misstated source/destination translation; and an RDS question introduced Aurora Global Database even though the correct choice was B.</td><td><span class="model-label">Best practical fit tested, with caveats</span><br>Promising for controlled local tasks and reports, but still needs verification for AWS technical answers.</td></tr>
+</tbody></table></div>
+<h2>Examples of the AWS-answer problems</h2>
+<div class="steps">
+<div class="step"><h3>VPC and NAT</h3><p>Granite's VPC response included an incorrect NAT detail and the answer options were not cleanly distinguishable. That matters because AWS questions often test exactly which subnet initiates traffic and how a route table directs it.</p></div>
+<div class="step"><h3>Traffic flow</h3><p>In a route/path question, the model was mostly on the right track but described source and destination address translation inaccurately. A nearly correct networking explanation can still teach the wrong mental model.</p></div>
+<div class="step"><h3>RDS architecture</h3><p>In an RDS question, Granite introduced Aurora Global Database even though that was not the correct answer (the expected choice was B). Adding a plausible AWS service does not make a response correct.</p></div>
+<div class="step"><h3>Question and JSON quality</h3><p>Qwen3 1.7B sometimes generated flawed AWS questions and corrupted JSON, while MiniCPM-V 4.7 1B repeated prompt content and exposed raw reasoning markers. Those failures made automation and dependable marking difficult.</p></div>
+</div>
+<h2>What Granite was useful for</h2>
+<ul><li><strong>Local inference:</strong> run prompts on the computer through Ollama, rather than depending on a remote model for every test.</li><li><strong>Structured responses:</strong> it passed a simple expected-output check used during the reporting tests.</li><li><strong>Basic reasoning:</strong> some route-selection and workflow tasks were handled reasonably, which made it worth investigating further.</li><li><strong>Automation experiments:</strong> the local run could be wrapped in a Python script so output could be captured and included in a repeatable workflow.</li></ul>
+<p>Granite is not an AWS-specific expert model, and a small model does not automatically know the latest service behaviour or interpret every exam scenario correctly. Its useful role here was as a local component for bounded tasks and experimentation—not as an authoritative answer key.</p>
+<h2>From model testing to an operational report</h2>
+<p>After spending many hours trying to connect the local model directly with Hermes, I switched to a simpler Python-script approach. That was the turning point: instead of making the whole workflow depend on a fragile direct integration, the script ran the local test and captured the result. The Hermes reporting workflow could then focus on summarising the day's scheduled jobs.</p>
+<div class="code-sample">Local Ollama model
+        ↓
+Python test / capture script
+        ↓
+Hermes scheduled-job results
+        ↓
+Daily success-and-failure summary
+        ↓
+AgentMail → private email inbox</div>
+<p>The email report is useful because it gives me a daily view of which Hermes cron jobs ran and which failed, rather than leaving me to inspect each job manually. The model experiment and the cron-monitoring workflow are related, but they are separate responsibilities: the local LLM is tested locally, while Hermes handles scheduled automation and reporting.</p>
+<div class="note"><strong>Important distinction:</strong> I did not achieve 100% accuracy on AWS questions, and this page does not claim that. The meaningful result was learning where small models fail, verifying output rather than trusting confidence, and finding a working script-based route to useful automation.</div>
+
+<h2>The hardware I was working with</h2>
+<p>This experiment was run on my own everyday Windows PC, not an AI workstation: an <strong>AMD Ryzen 5 3400G</strong>, around <strong>14 GB of usable RAM</strong>, and <strong>no dedicated high-end graphics card</strong>. That matters. Large language models can use a lot of memory, and without a powerful GPU the CPU may have to do most of the work. A model can technically start and still feel too slow to use comfortably.</p>
+<p>I have tried different local-AI experiments over time and hoped there might be a simple route to a capable private assistant. The reality is that hardware, model size, quantisation, context length and the job being asked all matter. I have not found a magic model that turns this PC into a high-end AI machine, so the sensible approach is to use small models for bounded tasks rather than chase the biggest models.</p>
+<div class="note"><strong>Why not just use the biggest model?</strong> A model download size is not the same as its total RAM requirement. Windows, the model's working context and other processes need memory too. On this PC, a quantised model in the roughly 1B–4B range is a more realistic starting point; larger models may be possible in some configurations but can be slow or leave little headroom.</div>
+<h2>Small models worth considering on a 14 GB RAM PC</h2>
+<p>These are practical candidates to test through Ollama, not promises of perfect answers or guaranteed speed. Actual performance depends on the model variant, quantisation, context settings and what else is running.</p>
+<div class="model-table-wrap"><table class="model-table"><thead><tr><th>Model</th><th>Why try it</th><th>Good uses</th><th>Limitations</th></tr></thead><tbody>
+<tr><td><strong>Granite 4 3B</strong><br><code>granite4:3b</code></td><td>Already tested in this project; handled a simple structured-output check and some routing reasoning.</td><td>Summaries, extraction, simple classifications, controlled tool/workflow experiments.</td><td>My AWS tests still exposed incorrect networking and database details. Never treat its confident answer as proof.</td></tr>
+<tr><td><strong>Qwen3 1.7B</strong><br><code>qwen3:1.7b</code></td><td>Small download and responsive enough to experiment with on modest hardware.</td><td>Simple questions, short drafts, labels, basic reasoning tests.</td><td>In my tests it generated flawed AWS practice questions and malformed JSON, so unattended output needs validation.</td></tr>
+<tr><td><strong>LFM2.5 1.2B</strong><br><code>lfm2.5-thinking:1.2b</code></td><td>A lightweight on-device model worth trying when memory and CPU speed are priorities.</td><td>Short text tasks, simple reasoning experiments, small automation steps.</td><td>Small does not mean universally accurate; test the exact task and allow for slower CPU inference.</td></tr>
+<tr><td><strong>Gemma 3 1B</strong><br><code>gemma3:1b</code></td><td>A compact general-purpose option for comparison.</td><td>Basic chat, rewriting, short summaries and classification.</td><td>Expect weaker performance on multi-step technical reasoning than from larger models; verify facts.</td></tr>
+<tr><td><strong>Gemma 3 4B</strong><br><code>gemma3:4b</code></td><td>A more capable-size experiment if the smaller models are not enough.</td><td>Longer summaries, more involved prompts, some coding assistance.</td><td>More demanding on RAM and likely slower on a CPU-only setup. Try a quantised build and short context first.</td></tr>
+<tr><td><strong>Qwen3 4B</strong><br><code>qwen3:4b</code></td><td>Another step up in size for comparing answer quality against speed.</td><td>General assistance, code explanations and more complex reasoning tests.</td><td>May be noticeably slower on this PC; a bigger model can still make mistakes.</td></tr>
+</tbody></table></div>
+<p>Official model listings and download variants change over time: <a href="https://ollama.com/library/granite4">Granite 4</a>, <a href="https://ollama.com/library/qwen3">Qwen3</a>, <a href="https://ollama.com/library/lfm2.5-thinking">LFM2.5 Thinking</a> and <a href="https://ollama.com/library/gemma3">Gemma 3</a>. Check the current variant and download size before installing.</p>
+<h2>What can small models do reliably?</h2>
+<ul><li><strong>Often a good fit:</strong> summarising a short log, extracting named fields from predictable text, sorting messages into a few categories, rewriting a paragraph, drafting a report from known results, or producing a first-pass answer for a person to review.</li>
+<li><strong>Use guardrails:</strong> outputting JSON, choosing an automation action, or answering a technical question. Validate the format, constrain the choices, and check important fields in code.</li>
+<li><strong>Do not trust them alone:</strong> AWS architecture decisions, exam answer keys, current service limits/prices, security-sensitive changes, or any task where a plausible technical error could cause harm.</li></ul>
+<p>For my Hermes reporting experiment, the useful job was not asking a tiny model to understand everything. It was capturing scheduled-job results and reporting successes and failures. A predictable Python script and explicit checks are a better foundation for that than hoping a language model always interprets output correctly.</p>
+<h2>MiniCPM-V, phones and PC expectations</h2>
+<p>A YouTube video by Julian Goldie brought MiniCPM-V to my attention. The important distinction is that MiniCPM-V is a vision-language model family, and different model variants and device builds can target different hardware. A demo on an iPhone does not automatically mean that the same model will run better on every PC: phones may use their own optimised runtimes and acceleration, while my Windows PC has different hardware constraints. The model version, quantisation, runtime and task all need to match the device.</p>
+<p>My own MiniCPM-V 4.7 1B test on this PC repeated parts of prompts and exposed raw reasoning markers, and its VPC explanations were not clear enough. That is evidence about the version and setup I tested—not proof that every MiniCPM variant is bad, or that an iPhone is always more powerful than a PC.</p>
+<div class="note"><strong>My conclusion:</strong> I am not giving up on AI. I am being realistic about local models on this hardware. Small models can be useful helpers for narrow, checkable tasks; they are not a drop-in replacement for a strong cloud model or a dependable AWS expert. The most valuable outcome so far has been learning to test, verify and simplify the workflow.</div>
+
+<h2>How to test a local model from Windows</h2>
+<p>This is a small, repeatable test bench for Ollama. It checks whether the model answers basic facts, follows a simple format, explains an AWS concept, and handles a small scenario. Run the same prompts against different models and compare accuracy, clarity and speed. These are manual smoke tests, not a scientific benchmark.</p>
+<h3>Step 1 — Check Ollama and your installed models</h3>
+<div class="code-sample">ollama --version
+ollama list
+ollama ps</div>
+<p><code>ollama list</code> shows downloaded models; <code>ollama ps</code> shows models currently loaded in memory.</p>
+<h3>Step 2 — Try a small Llama model</h3>
+<p>For example, Llama 3.2 1B is a compact text model. Its Ollama library listing gives the current variant and download details. It is a test candidate, not a guarantee that it will be the best model for this PC.</p>
+<div class="code-sample">ollama pull llama3.2:1b
+ollama run llama3.2:1b</div>
+<p>At the interactive prompt, enter one question at a time:</p>
+<div class="code-sample">What is the capital of France? Answer in one sentence.
+
+Explain what an Amazon VPC is in two simple sentences.
+
+A private subnet needs outbound IPv4 internet access initiated by instances, but no inbound internet connections. Which AWS component is commonly used, and where should it be placed? Explain briefly.</div>
+<p>Exit the chat with <code>/bye</code>. A small model may know the capital but still get AWS details wrong. Check technical answers against trusted AWS documentation or your study materials.</p>
+<h3>Step 3 — Run a prompt directly from PowerShell</h3>
+<p>You do not have to enter interactive chat each time. This runs one prompt and returns to PowerShell:</p>
+<div class="code-sample">ollama run llama3.2:1b "What is the capital of France? Answer in one sentence."
+ollama run llama3.2:1b "Explain Amazon S3 in two simple sentences."
+ollama run llama3.2:1b "Name three checks you would make before troubleshooting an EC2 instance that cannot reach the internet."</div>
+<p>Swap <code>llama3.2:1b</code> for a model you already have, such as <code>granite4:3b</code> or <code>qwen3:1.7b</code> (use the exact tag shown by <code>ollama list</code>).</p>
+<h3>Step 4 — Capture the answer and elapsed time</h3>
+<p>This PowerShell example saves a response to a text file and reports how long the command took. Run it in a normal PowerShell window, not inside Ollama's interactive chat:</p>
+<div class="code-sample">$model = "llama3.2:1b"
+$prompt = "What is the capital of France? Answer in one sentence."
+$timer = [System.Diagnostics.Stopwatch]::StartNew()
+$answer = ollama run $model $prompt 2>&1 | Out-String
+$timer.Stop()
+"Model: $model`nPrompt: $prompt`nElapsed: $($timer.Elapsed.TotalSeconds) seconds`n`nAnswer:`n$answer" |
+  Tee-Object -FilePath ".\llm-test-result.txt"</div>
+<p>Repeat with the same prompt and a different model, changing only the <code>$model</code> value. Timing is approximate and can vary with first-load overhead, background applications and model settings.</p>
+<h3>Step 5 — Test format-following, not just knowledge</h3>
+<p>Small models are often useful for bounded tasks, but they can also break simple instructions. Try this prompt:</p>
+<div class="code-sample">Return exactly one line of JSON with keys "capital" and "country" for the capital of France. Do not add Markdown or commentary.</div>
+<p>Check whether the response is valid JSON and contains the expected values. A script can validate the format; that does not prove the model will be accurate on harder questions.</p>
+<h3>Step 6 — Keep a simple comparison record</h3>
+<div class="model-table-wrap"><table class="model-table"><thead><tr><th>Test</th><th>Expected result</th><th>What to record</th></tr></thead><tbody>
+<tr><td>Basic fact</td><td>Paris</td><td>Correct / incorrect; response time</td></tr>
+<tr><td>Instruction following</td><td>One sentence or two sentences as requested</td><td>Followed length and format?</td></tr>
+<tr><td>JSON output</td><td>Valid JSON with requested keys and values</td><td>Valid syntax and correct values?</td></tr>
+<tr><td>AWS concept</td><td>Consistent with trusted AWS documentation</td><td>Technical accuracy, missing caveats, invented details</td></tr>
+<tr><td>AWS scenario</td><td>Reasoned answer with assumptions made clear</td><td>Correct choice and explanation, not just confidence</td></tr>
+</tbody></table></div>
+<div class="note"><strong>Important:</strong> the capital-of-France test only checks a basic fact. A model passing it does not show that it is safe or accurate for AWS architecture, security, or exam answers. Score a set of questions with known answers, keep the prompts identical across models, and verify technical claims independently.</div>
+<p>References: <a href="https://ollama.com/library/llama3.2">Llama 3.2 model library</a> · <a href="https://github.com/ollama/ollama/blob/main/docs/cli.mdx">Ollama CLI reference</a>.</p>
+
+<h2>What this demonstrates</h2>
+<ul><li>Running and testing a local LLM using Ollama.</li><li>Evaluating model output instead of assuming it is correct.</li><li>Python scripting to make a repeatable local test and report.</li><li>Troubleshooting integration boundaries between tools.</li><li>Connecting scheduled automation results to email reporting.</li></ul>
+<p>This project reflects a practical approach to learning: try the integration, investigate what fails, simplify the workflow, and keep the working result useful and honest.</p>
+<hr style="margin:2rem 0;border:0;border-top:1px solid var(--line)">
+<h2>Beginner’s guide: try your own local AI</h2>
+<p>Curious about running a language model on your own computer? You can try a small model with <strong>Ollama</strong>, a tool that downloads and runs supported models locally. You do not need to build an AI application to start: install Ollama, open PowerShell, download a model, and ask it a question.</p>
+<h3>Is it free?</h3>
+<p>Ollama is free to download and use. Many models can be downloaded without paying, but each model has its own licence and terms, so check those before commercial use. You will need an internet connection to download the model. Once downloaded, a local model can usually answer prompts without sending them to a hosted AI service, provided you use the local Ollama interface and your other software does not forward the data elsewhere.</p>
+<h3>1. Install Ollama</h3>
+<p>Download it from the official <a href="https://ollama.com/download/windows">Ollama for Windows</a> page and follow the installer. Then open a new PowerShell window and check it is available:</p>
+<div class="code-sample">ollama --version
+ollama list</div>
+<p>The first command checks the installation. The second lists models you have already downloaded.</p>
+<h3>2. Download a small model and start chatting</h3>
+<p>Here are a few beginner-friendly starting points. They are not ranked guarantees: choose one first, then try others if it is too slow or the answers are weak.</p>
+<ul>
+<li><strong>Llama 3.2 1B</strong> — a compact text model for basic chat and simple tasks.</li>
+<li><strong>Qwen3 1.7B</strong> — another small model to compare for short questions and basic reasoning.</li>
+<li><strong>Gemma 3 1B</strong> — a compact general-purpose model for simple prompts and summaries.</li>
+</ul>
+<p>For example, to try Llama 3.2 1B, run:</p>
+<div class="code-sample">ollama run llama3.2:1b</div>
+<p>The first run downloads the model if needed. When its prompt appears, try these examples:</p>
+<div class="code-sample">What is the capital of France? Answer in one sentence.
+
+Explain photosynthesis as if I were 12 years old.
+
+Give me three ideas for a simple weekend meal.
+
+Summarise this paragraph in three bullet points: [paste a short paragraph here]</div>
+<p>To leave the interactive chat, type <code>/bye</code>. For the other models, check their official Ollama library pages for the current model tags and instructions: <a href="https://ollama.com/library/llama3.2">Llama 3.2</a>, <a href="https://ollama.com/library/qwen3">Qwen3</a> and <a href="https://ollama.com/library/gemma3">Gemma 3</a>.</p>
+<h3>3. Ask a single question straight from PowerShell</h3>
+<p>You can also run one prompt without entering the interactive chat:</p>
+<div class="code-sample">ollama run llama3.2:1b "What is the capital of France?"
+ollama run llama3.2:1b "Explain what a password manager does in two sentences."
+ollama run llama3.2:1b "Give me five beginner tips for learning Python."</div>
+<p>Replace <code>llama3.2:1b</code> with the exact tag shown by the model's Ollama library page or by <code>ollama list</code>.</p>
+<h3>4. What kind of computer do you need?</h3>
+<p>Small models are generally the easiest place to start on an ordinary PC. Bigger models usually need more memory and may run slowly without a suitable GPU. As a rough rule, try a 1B–4B quantised model first on a machine with around 14 GB RAM; actual requirements vary by model, context length and other programs running. If it feels slow, close memory-heavy apps or try a smaller model.</p>
+<h3>5. What can a small local model do?</h3>
+<ul><li><strong>Often useful for:</strong> drafting, rewriting, simple summaries, brainstorming, explaining everyday concepts and sorting short pieces of text.</li><li><strong>Check its work for:</strong> calculations, code, structured data, factual claims and technical instructions.</li><li><strong>Do not rely on it alone for:</strong> medical, legal, financial, security or important cloud architecture decisions. Small models can sound certain while being wrong.</li></ul>
+<h3>6. Does “local” mean private?</h3>
+<p>Running prompts through the local Ollama service can keep them on your own computer instead of sending them to a hosted model. But privacy also depends on the application you use, plugins, telemetry, network settings and any tools connected to the model. Avoid entering passwords, API keys or sensitive personal information, and check the software's documentation if privacy is important.</p>
+<div class="note"><strong>Beginner tip:</strong> start with one small model and three questions whose answers you already know. Try the same prompts with another model and compare correctness, clarity and speed. Passing a simple test like “What is the capital of France?” does not prove a model is reliable at harder tasks.</div>
+
+<hr style="margin:2rem 0;border:0;border-top:1px solid var(--line)">
+<h2>Watch: run Llama from Windows Command Prompt</h2>
+<p>If you prefer typing commands instead of using a browser-based chat interface, start here. This Windows tutorial shows how to install Ollama and run small Llama models from your own computer.</p>
+<p><a href="https://www.youtube.com/watch?v=92_yb31Bqzk" target="_blank" rel="noopener noreferrer"><strong>▶ Watch on YouTube: Download, Install, and Run Llama 3.2 1B and 3B in Windows Using Ollama</strong></a> — Aleksandar Haber PhD.</p>
+<p>After installing Ollama, open PowerShell or Command Prompt and try:</p>
+<pre><code>ollama --version
+ollama list
+ollama run llama3.2:1b</code></pre>
+<p>The first run downloads the model. When the chat prompt appears, type a question and press Enter. Type <code>/bye</code> to leave the chat. You do not need Open WebUI for this workflow.</p>
+<p><strong>Official installer:</strong> <a href="https://ollama.com/download/windows" target="_blank" rel="noopener noreferrer">Ollama for Windows</a>. The model runs locally once downloaded; allow time and disk space for the initial download.</p>
+<div class="actions"><a class="btn primary" href="https://github.com/Jazblue/mywebsite">View website repository</a><a class="btn secondary" href="https://jazblue.github.io/mywebsite/">Back to portfolio</a></div>
+</article></main><footer>Jason Harvey · AWS Cloud, AI &amp; Automation Portfolio</footer>
+</body></html>
