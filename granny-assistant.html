@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Build notes and honest progress analysis for Granny, a local Python AI voice assistant using Whisper, Granite and Piper TTS on Windows.">
+  <link rel="canonical" href="https://jazblue.github.io/mywebsite/granny-assistant.html">
+  <title>Granny — Local AI Voice Assistant | Jason Harvey</title>
+  <style>
+    body{font-family:"Segoe UI",Arial,sans-serif;margin:0;background:#f5f7fa;color:#333;line-height:1.65}
+    header{background:#1f2937;color:#fff;padding:2rem 1rem;text-align:center}
+    header p{color:#d1d5db;margin-bottom:0}
+    main{max-width:900px;margin:2rem auto;padding:2rem;background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+    h2{color:#1f2937;margin-top:2rem} a{color:#2563eb;text-decoration:none}a:hover{text-decoration:underline}
+    .tag{display:inline-block;background:#e3f2fd;color:#185abc;padding:2px 8px;border-radius:4px;font-size:.85rem;margin:2px}
+    .note{background:#f8f9fa;border-left:4px solid #64748b;padding:1rem;margin:1rem 0}
+    code{background:#f1f5f9;padding:2px 5px;border-radius:4px;overflow-wrap:anywhere}
+    li{margin:.4rem 0}footer{text-align:center;padding:1rem;color:#6b7280;font-size:.9rem}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Granny — Local AI Voice Assistant</h1>
+    <p>A practical Windows voice-assistant prototype built, tested and debugged on 26 October 2026.</p>
+    <p><span class="tag">Python</span><span class="tag">Whisper</span><span class="tag">Granite 4:3b</span><span class="tag">Piper TTS</span><span class="tag">Local-first</span></p>
+  </header>
+  <main>
+    <p><a href="projects.html">← Back to all projects</a></p>
+    <h2>Project overview</h2>
+    <p>Granny is an experimental voice assistant running locally on a Windows PC. The goal is to speak naturally, have the assistant interpret a request, save simple to-do items, read them back, and respond aloud. This is a working prototype, not a finished product or a hosted web application.</p>
+
+    <h2>Architecture and tools</h2>
+    <ul>
+      <li><strong>Speech-to-text:</strong> Faster-Whisper using the <code>base</code> model on CPU with int8 computation.</li>
+      <li><strong>Language model:</strong> Granite <code>granite4:3b</code> through the local Ollama setup to interpret requests.</li>
+      <li><strong>Text-to-speech:</strong> Piper-generated speech, played through the PC's audio output using Python audio playback.</li>
+      <li><strong>Task storage:</strong> a plain text file at <code>%USERPROFILE%\GrannyAssistant	odos.txt</code>.</li>
+      <li><strong>Runtime:</strong> a Python script, <code>granite_task_assistant.py</code>, running locally on Windows.</li>
+    </ul>
+    <p>The design keeps the core interaction local on the PC. That does not by itself guarantee that every model component or dependency is fully offline in every configuration; this prototype's privacy and dependency assumptions should be verified before broader use.</p>
+
+    <h2>What worked in today's build session</h2>
+    <ul>
+      <li>Whisper captured speech and printed the transcription for inspection.</li>
+      <li>Granite interpreted a task request and saved <em>Buy bread</em> to the to-do file.</li>
+      <li>Granny read back the saved item and identified the file where it was stored.</li>
+      <li>Spoken responses and visible console responses worked together.</li>
+      <li>A Python compilation check was used to catch a tab/space indentation error before running the script again.</li>
+    </ul>
+
+    <h2>What went wrong — and what it taught us</h2>
+    <p>When the spoken request was “Add a task, buy milk”, Whisper transcribed it as “Add a task by milk”. The assistant then saved the misheard words. The distinction between <em>buy</em> and <em>by</em> is difficult because the words sound alike; this is a speech-recognition/context problem, not simply a matter of adding more code.</p>
+    <p>A small phrase-specific correction was attempted, but the following test still showed the same transcription and response. Therefore, that issue is <strong>not yet verified as fixed</strong>. Adding many one-off substitutions would make the code brittle and would not deliver perfect recognition.</p>
+    <p>An indentation error also occurred after a code edit mixed tabs and spaces. Removing the temporary workaround and restoring a consistently indented <code>main()</code> got the script compiling and running again. The lesson is to make small, targeted changes, compile-check after edits, and preserve working audio code.</p>
+
+    <h2>Current status</h2>
+    <div class="note"><strong>Working:</strong> listen/transcribe loop, visible output, spoken replies, basic task saving, and reading the last saved task back.<br><strong>Known limitation:</strong> similar-sounding words can be transcribed incorrectly; the “buy milk” case remains unresolved.<br><strong>Not yet demonstrated:</strong> a packaged installer, robust confirmation flow, broad error recovery, automated tests, or a browser-hosted version.</div>
+
+    <h2>Practical next steps</h2>
+    <ol>
+      <li>Keep a known-good copy of the working script and avoid changing the audio playback path.</li>
+      <li>Try a small set of representative spoken commands and record both the transcription and saved result.</li>
+      <li>For ambiguous task wording, consider asking for confirmation before saving instead of silently guessing.</li>
+      <li>Keep phrase correction rules narrow and tested; prefer contextual confirmation over an ever-growing list of substitutions.</li>
+      <li>Before publishing the actual source code, review it for machine-specific paths, local configuration, credentials, and other private details.</li>
+    </ol>
+
+    <h2>Why this project matters</h2>
+    <p>This project demonstrates practical integration and debugging across Python, speech recognition, a locally hosted language model, text-to-speech, file I/O, and a real microphone/audio loop. It also records a realistic engineering lesson: a prototype can be genuinely useful without being perfect, and documenting a failed fix is better than claiming a problem has been solved when the test says otherwise.</p>
+    <p><a href="https://github.com/Jazblue/mywebsite">Portfolio repository on GitHub</a></p>
+  </main>
+  <footer>© 2026 Jason Harvey · Local AI experiments</footer>
+</body>
+</html>
