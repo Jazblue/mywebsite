@@ -32,3 +32,10 @@ Containerization: Deploying scalable workloads using AWS ECS Fargate.
  AWS Solutions Architect – Associate (SAA-C03) — Currently Studying
  HashiCorp Terraform Associate (Upcoming)
 “The goal isn't just to pass the exam, but to build the solution.”
+
+## 🤖 Granny — Local AI Voice Assistant (Prototype)
+A Windows-based Python voice assistant experiment combining Faster-Whisper speech recognition, a local Granite model, Piper text-to-speech, and file-based to-do storage. The build notes document working features, the unresolved “buy”/“by” transcription case, an indentation issue caught by `py_compile`, and practical next steps.
+
+Project write-up: https://jazblue.github.io/mywebsite/granny-assistant.html
+
+Status: working prototype; source code is not published in this portfolio repository yet.
