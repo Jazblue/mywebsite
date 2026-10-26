@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Command Centre</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand">
+      <div class="logo-mark">◆</div>
+      <div class="brand-text">
+        <h1>AI Command Centre</h1>
+        <p class="subtitle">Personal project dashboard</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button id="exportBtn" class="btn btn-ghost" title="Export data as JSON">⬇ Export</button>
+      <button id="importBtn" class="btn btn-ghost" title="Import data from JSON">⬆ Import</button>
+      <input id="importFile" type="file" accept="application/json" hidden />
+      <button id="resetBtn" class="btn btn-ghost" title="Reset to defaults">↺ Reset</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <!-- LEFT: Projects + Progress -->
+    <section class="panel" aria-label="Projects">
+      <div class="panel-head">
+        <h2>Projects</h2>
+        <button id="addProjectBtn" class="btn btn-primary" title="Add a new project">+ New Project</button>
+      </div>
+
+      <div id="projectList" class="project-list"></div>
+
+      <div class="progress-overview">
+        <h3>Overall Progress</h3>
+        <div class="progress-bar" id="overallProgress">
+          <div class="progress-fill" id="overallFill"></div>
+        </div>
+        <p class="progress-label" id="overallLabel">0% complete · 0 tasks</p>
+      </div>
+    </section>
+
+    <!-- RIGHT: Tasks + Notes -->
+    <section class="panel" aria-label="Workspace">
+      <div class="panel-head">
+        <h2>Task Checklist</h2>
+        <button id="addTaskBtn" class="btn btn-primary" title="Add a new task">+ New Task</button>
+      </div>
+
+      <div id="taskList" class="task-list"></div>
+
+      <div class="notes-section">
+        <div class="panel-head">
+          <h2>Notes</h2>
+          <button id="clearNotesBtn" class="btn btn-ghost" title="Clear notes">Clear</button>
+        </div>
+        <textarea id="notesArea" class="notes-area" placeholder="Jot down ideas, links, reminders…"></textarea>
+        <p class="notes-meta" id="notesMeta"></p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Add/Edit Project Modal -->
+  <div id="projectModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="projectModalTitle">
+    <div class="modal-card">
+      <h3 id="projectModalTitle">New Project</h3>
+      <label class="field">
+        <span>Project name</span>
+        <input id="projectName" type="text" placeholder="e.g. Website Redesign" />
+      </label>
+      <label class="field">
+        <span>Description</span>
+        <textarea id="projectDesc" rows="2" placeholder="What is this project about?"></textarea>
+      </label>
+      <label class="field">
+        <span>Color theme</span>
+        <select id="projectColor">
+          <option value="#6366f1">Indigo</option>
+          <option value="#10b981">Emerald</option>
+          <option value="#f59e0b">Amber</option>
+          <option value="#ef4444">Rose</option>
+          <option value="#3b82f6">Blue</option>
+          <option value="#a855f7">Purple</option>
+        </select>
+      </label>
+      <div class="modal-actions">
+        <button id="cancelProjectBtn" class="btn btn-ghost">Cancel</button>
+        <button id="saveProjectBtn" class="btn btn-primary">Save Project</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add/Edit Task Modal -->
+  <div id="taskModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="taskModalTitle">
+    <div class="modal-card">
+      <h3 id="taskModalTitle">New Task</h3>
+      <label class="field">
+        <span>Task text</span>
+        <input id="taskText" type="text" placeholder="e.g. Wire up authentication" />
+      </label>
+      <label class="field">
+        <span>Project</span>
+        <select id="taskProject"></select>
+      </label>
+      <label class="field">
+        <span>Due date</span>
+        <input id="taskDue" type="date" />
+      </label>
+      <div class="modal-actions">
+        <button id="cancelTaskBtn" class="btn btn-ghost">Cancel</button>
+        <button id="saveTaskBtn" class="btn btn-primary">Save Task</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
