@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="The Boltzmann Brain paradox explained simply. Thought experiment on cosmic fluctuations, entropy, and the nature of reality in physics.">
+    <link rel="canonical" href="https://jazblue.github.io/mywebsite/Boltzmann.html">
     <title>The Boltzmann Brain Problem (Kid-Friendly Explanation)</title>
     <style>
         body {
@@ -134,97 +135,5 @@
 
 </div>
 
-    <section>
-    <h2>5. Random Past Generator</h2>
-    <p>Click to generate a playful, imaginary past — a nod to the Boltzmann Brain idea.</p>
-
-    <button id="generateBtn">Generate Random Past</button>
-    <div id="result">Your random past will appear here...</div>
-  </section>
-
-  <script>
-    const options = [
-      "You once captained a tiny spacecraft made from recycled kettles.",
-      "You won a school talent show with a dance you invented by accident.",
-      "You helped a lost cat find its home during a thunderstorm.",
-      "You spent a whole summer talking to clouds — and they talked back.",
-      "You discovered a secret room in your childhood home that nobody else remembered.",
-      "You nearly invented time travel using only string, a saucepan, and fierce determination."
-    ];
-
-    document.getElementById("generateBtn").addEventListener("click", () => {
-      const random = options[Math.floor(Math.random() * options.length)];
-      document.getElementById("result").textContent = random;
-    });
-  </script>
-
-<hr>
-
-    <h2>3. The Future of the Hunt: Next-Generation Colliders 🔭</h2>
-
-    <p>Since the LHC has largely exhausted the search range for some candidates, the next generation of colliders is being planned to search for particles that are either much heavier or interact in different ways.</p>
-
-    <p>The most ambitious proposal is the **Future Circular Collider (FCC)** at CERN, which would smash particles at collision energies up to **100 TeV** (Tera-electron Volts), compared to the LHC's maximum of around 14 TeV. More energy means scientists can create much **heavier** particles if Dark Matter is hiding there. </p>
-
-    <p>The future of Dark Matter discovery relies on three complementary methods:</p>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Method</th>
-                <th>Where It Happens</th>
-                <th>What It Does</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><strong>Make It</strong> (Colliders)</td>
-                <td>CERN (LHC, FCC)</td>
-                <td>Tries to <strong>create</strong> Dark Matter particles by smashing protons.</td>
-            </tr>
-            <tr>
-                <td><strong>Shake It</strong> (Direct Detection)</td>
-                <td>Deep Underground Labs</td>
-                <td>Tries to catch a naturally occurring Dark Matter particle as it <strong>hits a detector</strong> on Earth.</td>
-            </tr>
-            <tr>
-                <td><strong>Break It</strong> (Indirect Detection)</td>
-                <td>Space Telescopes (e.g., Fermi)</td>
-                <td>Looks for signals created when two Dark Matter particles **annihilate** (destroy each other) in space.</td>
-            </tr>
-        </tbody>
-    </table>
-
-</div>
-<div class="container">
-    <hr>
-
-    <h2>🚢 Titanic's Bulkheads: A Lesson in Containment</h2>
-
-    <p>That's a great real-world example of **bulkheads**! In coding, a bulkhead system (like in the AWS-related circuit breaker pattern) is used to **isolate failure** so that if one service breaks, it doesn't take the whole system down. The Titanic used physical bulkheads with exactly the same goal—to contain a flood and keep the ship afloat.</p>
-
-    <h3>1. The Design: Watertight Compartments</h3>
-
-    <p>The Titanic was famously declared "unsinkable" largely because of its revolutionary system of **16 transverse bulkheads**:</p>
-
-    <ul>
-        <li><strong>What they were:</strong> Strong, steel walls built across the width of the ship, dividing the hull into 16 separate compartments.</li>
-        <li><strong>The Goal:</strong> Each bulkhead had watertight doors (closed quickly by electrical signals) so that if the hull was breached (like hitting an iceberg), water would be trapped in only one or two compartments.</li>
-        <li><strong>The Safety Margin:</strong> The design was calculated to survive even if **four** of its 16 forward compartments were completely flooded.</li>
-    </ul>
-
-    <h3>2. The Flaw: Spilling Over the Top</h3>
-
-    <p>The system failed because the bulkheads were **not tall enough**. This is the key design flaw:</p>
-
-    <ul>
-        <li><strong>The Height:</strong> The bulkheads only went up to E Deck, which was relatively low in the ship. They did not reach the main upper deck. </li>
-        <li><strong>The Problem:</strong> The iceberg cut a long gash that breached **five** of the forward compartments. As the first four filled with water, the bow sank lower into the ocean.</li>
-        <li><strong>The Chain Reaction:</strong> Once the water level in the flooded compartments rose above the top edge of the steel bulkheads, the water simply began to **spill over** the top of the wall and into the next, previously dry, compartment. This chain reaction continued, defeating the isolation system and causing the entire ship to sink.</li>
-    </ul>
-
-    <p>In AWS terms, this would be like a failure in one service (the first compartment) overwhelming its isolation boundary (the low bulkhead wall) and causing a cascading failure across the entire application.</p>
-
-</div>
 </body>
 </html>
