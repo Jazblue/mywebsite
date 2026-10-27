@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Amazon SNS vs SQS: when to use each messaging service in AWS. Compare use cases, patterns, and architecture decisions.">
     <title>Serverless vs. EC2: A Contact Form Comparison</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    
+
     <style>
         body {
             font-family: 'Roboto', sans-serif;
@@ -135,16 +136,16 @@
                 text-align: left;
                 color: #2c3e50;
             }
-            
+
             /* Setting data-label content for mobile view */
             tr:nth-child(1) td:nth-child(2)::before { content: 'Option 1: EC2 (Server-Based)'; }
             tr:nth-child(1) td:nth-child(3)::before { content: 'Option 2: Lambda + SES (Serverless)'; }
             tr:nth-child(2) td:nth-child(2)::before { content: 'Architecture Model'; }
             tr:nth-child(2) td:nth-child(3)::before { content: 'Architecture Model'; }
             /* ... Repeat for other rows if needed, but the data-label in the HTML is often easier ... */
-            
+
             .feature-name {
-                display: none; 
+                display: none;
             }
         }
     </style>

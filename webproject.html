@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Build and deploy web projects on AWS. Step-by-step guide to hosting static sites, serverless apps, and cloud deployment.">
     <title>Full CRUD API Notes Client</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f4f4; }
@@ -20,7 +21,7 @@
     <div class="container">
         <h1>Full CRUD API Tester</h1>
         <p>Use this client to test all four endpoints. Run the **POST** request first; the **Note ID** field will auto-fill for the other tests.</p>
-        
+
         <input type="hidden" id="currentNoteId" value="">
 
         <div class="section">
@@ -61,9 +62,9 @@
                 <button type="submit" class="delete-btn">DELETE to /delete</button>
             </form>
         </div>
-        
+
         <hr>
-        
+
         <h3>API Response:</h3>
         <div id="response">Waiting for test...</div>
     </div>
@@ -71,17 +72,18 @@
     <script>
         const API_BASE_URL = 'https://1eewgz8ff8.execute-api.eu-west-2.amazonaws.com/live';
         const responseDiv = document.getElementById('response');
-        
+
         // Helper function to update response display
         function displayResponse(response, data) {
-            responseDiv.textContent = `Status: ${response.status} ${response.statusText}\n`;
+            responseDiv.textContent = `Status: ${response.status} ${response.statusText}
+`;
             if (data) {
                 responseDiv.textContent += JSON.stringify(data, null, 2);
             } else {
                 responseDiv.textContent += 'No Content returned (likely a successful DELETE).';
             }
         }
-        
+
         // --- 1. POST (CREATE) ---
         document.getElementById('createNoteForm').addEventListener('submit', async function(event) {
             event.preventDefault();
@@ -117,7 +119,7 @@
                 console.error('Error:', error);
             }
         });
-        
+
         // --- 2. GET (READ) ---
         document.getElementById('readNoteForm').addEventListener('submit', async function(event) {
             event.preventDefault();
@@ -142,12 +144,12 @@
             event.preventDefault();
             const userId = document.getElementById('putUserId').value;
             const noteId = document.getElementById('putNoteId').value;
-            
+
             const payload = {
                 title: document.getElementById('putTitle').value,
                 content: document.getElementById('putContent').value
             };
-            
+
             const url = `${API_BASE_URL}/update?userId=${userId}&noteId=${noteId}`;
             responseDiv.textContent = 'Sending PUT request...';
 
@@ -157,8 +159,8 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
-                
-                const data = await response.json(); 
+
+                const data = await response.json();
                 displayResponse(response, data);
             } catch (error) {
                 responseDiv.textContent = `Request failed: ${error.message}`;
@@ -176,9 +178,9 @@
 
             try {
                 const response = await fetch(url, { method: 'DELETE' });
-                
+
                 // DELETE usually returns 204 No Content
-                displayResponse(response, null); 
+                displayResponse(response, null);
             } catch (error) {
                 responseDiv.textContent = `Request failed: ${error.message}`;
             }
