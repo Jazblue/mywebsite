@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A practical experiment exploring Pooled, a browser-based peer-to-peer approach to distributed AI inference across devices. Findings, setup notes and outstanding tests by Jason Harvey.">
+  <meta property="og:title" content="Pooled Distributed AI Inference Experiment | Jason Harvey">
+  <meta property="og:description" content="Notes from testing browser-based peer-to-peer AI inference using a Windows PC and an iPhone.">
+  <meta property="og:type" content="article">
+  <title>Pooled Distributed AI Inference Experiment | Jason Harvey</title>
+  <style>
+    :root { --ink:#1e293b; --muted:#64748b; --blue:#2563eb; --pale:#eff6ff; --line:#e2e8f0; --bg:#f8fafc; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:'Segoe UI',Tahoma,Arial,sans-serif; line-height:1.7; color:var(--ink); background:var(--bg); }
+    header { padding:3.5rem 1.25rem; text-align:center; color:#fff; background:linear-gradient(135deg,#1e3a8a,#6d28d9); }
+    header h1 { margin:.5rem auto; max-width:850px; font-size:clamp(2rem,5vw,3rem); line-height:1.15; }
+    header p { max-width:720px; margin:1rem auto 0; color:#e0e7ff; }
+    .eyebrow { display:inline-block; padding:.25rem .75rem; border:1px solid #c7d2fe; border-radius:99px; color:#e0e7ff; font-size:.85rem; letter-spacing:.04em; }
+    main { width:min(920px,calc(100% - 2rem)); margin:2rem auto 3rem; }
+    .panel { background:#fff; border:1px solid var(--line); border-radius:14px; padding:1.5rem; margin:1.25rem 0; box-shadow:0 4px 12px rgba(15,23,42,.04); }
+    h2 { margin-top:0; font-size:1.45rem; }
+    h3 { margin-bottom:.35rem; font-size:1.08rem; }
+    p { margin:.55rem 0; }
+    .notice { background:var(--pale); border-left:4px solid var(--blue); padding:1rem 1.1rem; border-radius:8px; }
+    .status { display:inline-block; background:#fef3c7; color:#92400e; padding:.2rem .65rem; border-radius:99px; font-size:.82rem; font-weight:700; }
+    .steps { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1rem; }
+    .step { background:#f8fafc; border:1px solid var(--line); border-radius:10px; padding:1rem; }
+    ul { padding-left:1.25rem; }
+    li { margin:.45rem 0; }
+    a { color:var(--blue); text-decoration:none; }
+    a:hover { text-decoration:underline; }
+    .links { display:flex; flex-wrap:wrap; gap:1rem; margin-top:1rem; }
+    .button { display:inline-block; padding:.65rem 1rem; border-radius:8px; background:var(--blue); color:#fff; font-weight:600; }
+    .button.secondary { background:#e2e8f0; color:var(--ink); }
+    footer { text-align:center; padding:1.5rem; color:var(--muted); font-size:.9rem; }
+    @media(max-width:600px) { header { padding:2.5rem 1rem; } .panel { padding:1.1rem; } }
+  </style>
+</head>
+<body>
+  <header>
+    <span class="eyebrow">Hands-on AI experiment · November 2026</span>
+    <h1>Pooled: Exploring Distributed AI Inference</h1>
+    <p>Testing whether everyday devices can contribute browser-based compute to a peer-to-peer AI inference setup.</p>
+  </header>
+
+  <main>
+    <p><a href="index.html">← Back to Jason Harvey’s portfolio</a></p>
+
+    <section class="panel">
+      <span class="status">Experiment in progress</span>
+      <h2>What we set out to explore</h2>
+      <p>This experiment explores <a href="https://pooled.run" target="_blank" rel="noopener noreferrer">Pooled</a>, an open-source project that investigates peer-to-peer, browser-based distributed AI inference. The idea is to connect devices so that available resources may be pooled rather than relying on one machine alone.</p>
+      <p>The aim was to test a Windows desktop and an iPhone as potential peers, understand the connection requirements, and distinguish what the interface reports from what has actually been proven.</p>
+      <p><strong>Credit:</strong> Pooled is the work of <a href="https://github.com/Nehanth/pooled" target="_blank" rel="noopener noreferrer">Nehanth Narendrula</a>. This page documents our hands-on testing and observations; it does not claim authorship of the Pooled project.</p>
+    </section>
+
+    <section class="panel">
+      <h2>Test setup</h2>
+      <div class="steps">
+        <div class="step">
+          <h3>Toucan · Windows PC</h3>
+          <p>Ryzen 5 3400G desktop with AMD Radeon Vega 11 graphics. Used as the first browser peer.</p>
+        </div>
+        <div class="step">
+          <h3>Sparrow · iPhone</h3>
+          <p>Used as a second device to investigate joining the same peer session from a mobile browser.</p>
+        </div>
+        <div class="step">
+          <h3>Browser connection</h3>
+          <p>Tested the local development page and the hosted Pooled website, with browser-based peer connectivity.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>What we observed</h2>
+      <ul>
+        <li><strong>Localhost is device-specific.</strong> Opening <code>localhost</code> on the iPhone points to the iPhone itself, not the Windows PC hosting the local page.</li>
+        <li><strong>LAN addressing helped with access.</strong> We switched to the PC’s local network address (192.168.0.155) so the phone could attempt to reach the PC-hosted page while on the same network.</li>
+        <li><strong>Peer connectivity was not straightforward.</strong> Browser, network and WebRTC connection behaviour caused difficulties; relay/TURN connectivity was also investigated.</li>
+        <li><strong>The interface displayed two devices and 4.5 GB of combined allocated capacity</strong> (4 GB on the PC and 0.5 GB on the iPhone) during the test.</li>
+      </ul>
+      <div class="notice">
+        <strong>Important:</strong> The displayed combined capacity is an interface-reported allocation, not proof that the iPhone successfully processed model layers or that inference was completed across both devices.
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Current conclusion</h2>
+      <p>We made useful progress understanding the setup and got far enough to see both devices represented in the session. However, we have <strong>not yet verified end-to-end distributed inference across the PC and iPhone</strong>.</p>
+      <p>To call the experiment successful, the next test needs to demonstrate a real inference request, confirm that work is distributed between the peers, and capture evidence such as device-level activity, logs or a reproducible output. Until then, this remains a connectivity and capacity-allocation experiment.</p>
+    </section>
+
+    <section class="panel">
+      <h2>Next steps</h2>
+      <ul>
+        <li>Re-test peer connectivity on a stable network and document the exact browser/device combination.</li>
+        <li>Check whether both peers become active for an actual inference request.</li>
+        <li>Capture logs or other evidence showing which device processes which part of the workload.</li>
+        <li>Record performance, reliability and any mobile-browser limitations before drawing conclusions.</li>
+      </ul>
+    </section>
+
+    <section class="panel">
+      <h2>Project references</h2>
+      <p>For the upstream implementation and live project, see the original Pooled resources:</p>
+      <div class="links">
+        <a class="button" href="https://pooled.run" target="_blank" rel="noopener noreferrer">Pooled website</a>
+        <a class="button secondary" href="https://github.com/Nehanth/pooled" target="_blank" rel="noopener noreferrer">Pooled on GitHub</a>
+        <a class="button secondary" href="index.html">Back to portfolio</a>
+      </div>
+    </section>
+  </main>
+  <footer>Jason Harvey · Practical AI, AWS and automation experiments</footer>
+</body>
+</html>
