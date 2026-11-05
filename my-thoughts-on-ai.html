@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Thoughts on AI | Jason Harvey</title>
+  <meta name="description" content="Personal reflections on experimenting with local AI models, vision, voice, automation and the strengths and limitations of free and paid LLMs.">
+  <link rel="canonical" href="https://jazblue.github.io/mywebsite/my-thoughts-on-ai.html">
+  <meta property="og:title" content="My Thoughts on AI | Jason Harvey">
+  <meta property="og:description" content="What I have learned from hands-on experiments with local AI, free models, automation and coding assistants.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://jazblue.github.io/mywebsite/my-thoughts-on-ai.html">
+  <style>
+    :root{--ink:#172033;--muted:#536176;--blue:#2563eb;--line:#dbe4ef;--panel:#f5f8fc}
+    *{box-sizing:border-box}body{margin:0;font-family:Segoe UI,Arial,sans-serif;background:#f3f6fb;color:var(--ink);line-height:1.75}
+    header{background:#172033;color:white;padding:2.7rem 1.2rem;text-align:center}header p{max-width:740px;margin:.7rem auto;color:#dbeafe}
+    main{max-width:900px;margin:2rem auto;padding:0 1rem}article{background:white;border:1px solid var(--line);border-radius:16px;padding:clamp(1.2rem,4vw,2.5rem);box-shadow:0 8px 28px #15243b0d}
+    h1{line-height:1.2;margin:0}h2{margin-top:2rem;color:#1e40af;line-height:1.3}p{color:var(--muted);margin:.7rem 0 1rem}a{color:var(--blue)}.back{display:inline-block;margin:0 0 1rem;text-decoration:none;font-weight:600}.note{border-left:4px solid var(--blue);padding:.85rem 1rem;background:#eff6ff;border-radius:0 8px 8px 0;color:#1e3a8a;margin:1.2rem 0}.closing{font-weight:600;color:#243b63}footer{text-align:center;color:#64748b;padding:1.5rem}
+    @media(max-width:600px){header{padding:2.2rem 1rem}main{margin:1rem auto}article{border-radius:12px}}
+  </style>
+</head>
+<body>
+<header>
+  <h1>My Thoughts on AI</h1>
+  <p>Personal observations from experimenting with local models, AI tools and automation over the last couple of months.</p>
+</header>
+<main>
+  <article>
+    <a class="back" href="index.html">&larr; Back to my portfolio</a>
+    <p>Over the last couple of months I have spent a lot of time experimenting with AI. I have tried running language models locally on my own PC, connecting them to automation tools, testing image and voice capabilities, and comparing the results with hosted AI services.</p>
+    <p>It has been a mixture of genuinely impressive results, frustrating failures and useful lessons. My biggest takeaway so far is that the best model depends on the job you give it.</p>
+
+    <h2>Where smaller local models surprised me</h2>
+    <p>One of the best results was <strong>Jase Vision AI</strong>. Using a relatively small, inexpensive vision model through Ollama, I was able to analyse uploaded photographs and experiment with webcam image descriptions. It worked much better than I expected for that focused task. It showed me that a smaller model can be genuinely useful when its capabilities match the problem.</p>
+    <p>The local voice-assistant experiment also showed promise. It could handle straightforward spoken interactions, although speech recognition and language understanding became less reliable when words sounded alike. English has plenty of homophones and near-homophones — for example, “buy” and “by” — and context is important when deciding what someone actually means. That is a difficult challenge for a small model and the speech pipeline around it.</p>
+    <p>Smaller models have also been useful for simple tasks, including generating AWS practice questions and helping with basic experiments. They can be a good low-cost option, provided I check important technical answers rather than treating them as authoritative.</p>
+
+    <h2>Where the limitations became obvious</h2>
+    <p>More complicated development work has been a different story. In one website-improvement experiment with a smaller Qwen model, I would personally rate the result around two or three out of ten. It struggled to deliver the quality and consistency I wanted.</p>
+    <p>My experiments with Reddit research and turning findings into content for my own website have also been inconsistent. Sometimes the model can complete a small part of the task, but following a longer workflow reliably is much harder. There have also been occasions when Hermes itself has been unreliable to start or keep running, so I cannot blame every problem on the language model alone. The model, automation, integrations and local setup all have to work together.</p>
+    <p>DeepSeek produced a strong, well-structured report during one of my review experiments. I was pleased with how it organised the findings. However, a separate simulated penetration-testing exercise was much less convincing. A good-looking report does not automatically mean an AI has carried out deep or dependable security analysis. Results need to be checked against evidence.</p>
+
+    <h2>Local AI or a paid model?</h2>
+    <p>I still see a place for local AI. It offers privacy, control and the chance to learn how models work without paying for every prompt. For focused jobs such as image descriptions, simple voice experiments and small tasks, it can offer excellent value.</p>
+    <p>But I am beginning to accept that my current PC and the smaller models I can comfortably run are not the right tools for every ambition — particularly more demanding coding, complex research workflows and the 3D website ideas I would like to explore.</p>
+    <p>I am now considering a paid hosted model, comparing OpenAI and Anthropic Claude, to see whether stronger reasoning and coding support can make my projects more reliable. Cost matters, but so does the time spent correcting poor results. I want to test the difference on real work before deciding what is worth paying for.</p>
+    <div class="note">A subscription and API access are not always the same thing. A chat or coding subscription does not automatically provide API usage for an automation such as Hermes; API billing and limits need to be checked separately.</div>
+
+    <h2>What I have learned</h2>
+    <p>Free and local models are not useless — far from it. They can be excellent when the task is narrow and the model is suited to it. But I have also learned not to expect a small model to perform like a much more capable coding or reasoning assistant.</p>
+    <p class="closing">My approach is to keep experimenting, measure the results honestly and choose the right tool for the job. The failures are part of the learning, just as much as the projects that work.</p>
+    <p>These are my personal observations from hands-on testing, not a formal benchmark. I expect my views to change as I try more models and build more projects.</p>
+    <a class="back" href="index.html">&larr; Return to Jason Harvey's portfolio</a>
+  </article>
+</main>
+<footer>Jason Harvey · AWS Cloud · AI · Automation</footer>
+</body>
+</html>
