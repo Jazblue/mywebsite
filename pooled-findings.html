@@ -67,7 +67,7 @@
         </div>
         <div class="step">
           <h3>Browser connection</h3>
-          <p>Tested the local development page and the hosted Pooled website, with browser-based peer connectivity.</p>
+          <p>The local development/localhost route was not the successful route. The working resolution was to open the hosted Pooled website over HTTPS (<a href="https://pooled.run" target="_blank" rel="noopener noreferrer">pooled.run</a>) on both devices. Using that live website, the Windows PC and iPhone successfully paired in the same Pooled session.</p>
         </div>
       </div>
     </section>
@@ -77,7 +77,7 @@
       <ul>
         <li><strong>Localhost is device-specific.</strong> Opening <code>localhost</code> on the iPhone points to the iPhone itself, not the Windows PC hosting the local page.</li>
         <li><strong>LAN addressing helped with access.</strong> We switched to the PC’s local network address (192.168.0.155) so the phone could attempt to reach the PC-hosted page while on the same network.</li>
-        <li><strong>Peer connectivity was not straightforward.</strong> Browser, network and WebRTC connection behaviour caused difficulties; relay/TURN connectivity was also investigated.</li>
+        <li><strong>The hosted HTTPS website resolved the pairing problem.</strong> After moving away from the localhost approach and using the live Pooled website over HTTPS on both devices, the PC and iPhone successfully paired in the same session.</li>
         <li><strong>The interface displayed two devices and 4.5 GB of combined allocated capacity</strong> (4 GB on the PC and 0.5 GB on the iPhone) during the test.</li>
       </ul>
       <div class="notice">
@@ -87,7 +87,8 @@
 
     <section class="panel">
       <h2>Current conclusion</h2>
-      <p>We made useful progress understanding the setup and got far enough to see both devices represented in the session. However, we have <strong>not yet verified end-to-end distributed inference across the PC and iPhone</strong>.</p>
+      <p><strong>Successful result:</strong> We opened the hosted Pooled website over HTTPS on the Windows PC and iPhone, shared the invite, and both devices successfully paired in the same session. This was the working resolution; we did not need to make a separate test page.</p>
+      <p>However, we have <strong>not yet verified that model layers or inference work were actually distributed between the PC and iPhone</strong>. Pairing confirms that the devices joined the session, not that both devices processed parts of a model.</p>
       <p>To call the experiment successful, the next test needs to demonstrate a real inference request, confirm that work is distributed between the peers, and capture evidence such as device-level activity, logs or a reproducible output. Until then, this remains a connectivity and capacity-allocation experiment.</p>
     </section>
 
