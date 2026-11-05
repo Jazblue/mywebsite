@@ -444,6 +444,15 @@
       <h2>AI &amp; Voice Assistant Experiments</h2>
       <div class="project-grid">
         <div class="project-card">
+          <h3>Project in Progress: Distributed AI Inference — Pooled Device Cluster</h3>
+          <p><span class="project-tag">WebGPU</span> <span class="project-tag">WebRTC</span> <span class="project-tag">Peer-to-peer</span> <span class="project-tag">Qwen</span> <span class="project-tag">JavaScript</span> <span class="project-tag">Networking</span></p>
+          <p>Exploring distributed browser-based AI inference by connecting a Windows PC and an iPhone using Pooled. The two devices are named Toucan (PC) and Sparrow (iPhone); Pooled reports 4.5 GB of combined allocated capacity (4 GB + 0.5 GB). Actual multi-device layer execution is still being validated, so this figure is not presented as proof of successful distributed inference.</p>
+          <p><strong>Connectivity challenge:</strong> The first local server test worked at <code>http://localhost:8080</code> on the PC, but not from the iPhone: localhost always refers to the device making the request. I then served the page from the PC and used its local network IP address so the iPhone could reach it. Browser access and WebRTC peer connectivity introduced further obstacles, including network restrictions and TURN relay issues. I also tested the main hosted Pooled website as an alternative way to access the service.</p>
+          <p><strong>Current focus:</strong> Confirm that both devices genuinely contribute model layers and take part in inference. The work provides practical experience in local web hosting, IP addressing, HTTP access, WebRTC and cross-device troubleshooting.</p>
+          <div class="project-links"><a href="https://pooled.run" target="_blank" rel="noopener noreferrer">Open Pooled website →</a><br><a href="https://github.com/Nehanth/pooled" target="_blank" rel="noopener noreferrer">View upstream Pooled source on GitHub →</a></div>
+          <p style="font-size:0.85rem;color:#6b7280;">Pooled is an open-source project by Nehanth Narendrula. This entry documents my own setup and experiments, not authorship of the Pooled engine.</p>
+        </div>
+        <div class="project-card">
           <h3>Granny — Local AI Voice Assistant</h3>
           <p>
             <span class="project-tag">Python</span>
