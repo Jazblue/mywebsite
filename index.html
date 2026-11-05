@@ -610,21 +610,6 @@ AI-powered voice support system using Vapi for AI voice orchestration, Twilio fo
                         </div>
                     </div>
                 </div>
-            <div class="cards-grid cards-2" style="margin-top: 2rem;">
-                <div class="card featured-card">
-                    <h3>Project in Progress: Distributed AI Inference — Pooled Device Cluster</h3>
-                    <p>Experimenting with peer-to-peer AI inference by connecting a Windows PC and an iPhone through Pooled, with Qwen models as the test workload. The aim is to explore whether multiple everyday devices can share model execution rather than relying on one machine.</p>
-                    <p><strong>What I have tested:</strong> Connected two devices — Toucan (Windows PC) and Sparrow (iPhone). Pooled reports 4.5 GB of combined allocated capacity (4 GB on the PC and 0.5 GB on the iPhone). This is reported capacity, not proof that inference is already being split successfully across both devices; multi-device execution remains under investigation.</p>
-                    <p><strong>Connectivity troubleshooting:</strong> The first local test used <code>http://localhost:8080</code>, which worked on the PC but not on the iPhone because localhost refers to the device making the request. I then served the project from the PC and accessed it over the home network using the PC's local IP address. Further testing exposed browser, HTTP access and WebRTC peer-connection challenges, including network restrictions and TURN relay connectivity. I also explored the main hosted Pooled website as an alternative access route.</p>
-                    <p><strong>Next step:</strong> Verify that both devices actually contribute model layers and participate in inference, rather than treating the displayed pooled capacity as proof.</p>
-                    <div class="tags"><span class="tag">WebGPU</span><span class="tag">WebRTC</span><span class="tag">Peer-to-peer</span><span class="tag">Qwen</span><span class="tag">JavaScript</span><span class="tag">Networking</span><span class="tag">Troubleshooting</span></div>
-                    <div class="hero-buttons" style="margin-top: 1rem;">
-                        <a href="https://pooled.run" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Pooled Website</a>
-                        <a href="https://github.com/Nehanth/pooled" target="_blank" rel="noopener noreferrer" class="btn btn-outline">Upstream GitHub Repository</a>
-                    </div>
-                    <p style="font-size:0.85rem; color:var(--text-light); margin-top:0.75rem;">Pooled is an open-source project by Nehanth Narendrula; this portfolio entry documents my own setup, testing and troubleshooting.</p>
-                </div>
-            </div>
         </section>
         <section>
             <h2 class="section-title">More AWS Projects & Labs</h2>
