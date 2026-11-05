@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Project notes for a Python AI-assisted static code security scanner initially developed with DeepSeek and independently reviewed and tested.">
+  <title>DeepSeek Security Auditor | Jason Harvey</title>
+  <style>
+    :root{--ink:#1e293b;--muted:#64748b;--blue:#2563eb;--pale:#eff6ff;--line:#e2e8f0;--bg:#f8fafc}*{box-sizing:border-box}body{margin:0;font-family:'Segoe UI',Tahoma,Arial,sans-serif;line-height:1.7;color:var(--ink);background:var(--bg)}header{padding:3.25rem 1.25rem;text-align:center;color:#fff;background:linear-gradient(135deg,#1e3a8a,#475569)}header h1{max-width:900px;margin:.5rem auto;font-size:clamp(2rem,5vw,3rem);line-height:1.15}header p{max-width:760px;margin:1rem auto;color:#e0e7ff}.eyebrow{display:inline-block;padding:.25rem .75rem;border:1px solid #c7d2fe;border-radius:99px;font-size:.85rem}main{width:min(900px,calc(100% - 2rem));margin:2rem auto 3rem}.panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:1.5rem;margin:1.25rem 0;box-shadow:0 4px 12px rgba(15,23,42,.04)}h2{margin-top:0;font-size:1.4rem}h3{margin-bottom:.25rem;font-size:1.05rem}.notice{padding:1rem 1.1rem;background:var(--pale);border-left:4px solid var(--blue);border-radius:8px}.status{display:inline-block;padding:.2rem .65rem;border-radius:99px;background:#fef3c7;color:#92400e;font-size:.82rem;font-weight:700}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem}.tile{padding:1rem;background:#f8fafc;border:1px solid var(--line);border-radius:10px}.tile p{margin:.25rem 0 0}ul{padding-left:1.25rem}li{margin:.45rem 0}a{color:var(--blue);text-decoration:none}a:hover{text-decoration:underline}.links{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1rem}.button{display:inline-block;padding:.65rem 1rem;border-radius:8px;background:var(--blue);color:#fff;font-weight:600}.button.secondary{background:#e2e8f0;color:var(--ink)}footer{text-align:center;padding:1.5rem;color:var(--muted);font-size:.9rem}@media(max-width:600px){header{padding:2.5rem 1rem}.panel{padding:1.1rem}}
+  </style>
+</head>
+<body>
+<header>
+  <span class="eyebrow">Hands-on AI and security experiment · November 2026</span>
+  <h1>DeepSeek Security Auditor</h1>
+  <p>Building and independently reviewing a Python tool for finding common security weaknesses in source code and configuration.</p>
+</header>
+<main>
+  <p><a href="index.html">← Back to Jason Harvey’s portfolio</a></p>
+  <section class="panel">
+    <span class="status">Experimental · active development</span>
+    <h2>Project overview</h2>
+    <p>This project began as an experiment using the free DeepSeek coding model to build a Python security scanner. The first version provided a useful starting point, but early validation exposed weaknesses in credential detection and report handling. I then used ChatGPT to take over the independent code review, make corrections, expand regression tests and document the limitations.</p>
+    <p>The aim is to explore how AI-generated code can be tested and improved through repeatable security-focused validation, rather than assuming generated code is correct.</p>
+    <div class="notice"><strong>Important distinction:</strong> This is a pattern-based static code analyser. It is not a live website penetration-testing service, a full vulnerability assessment or a certified security product.</div>
+  </section>
+  <section class="panel">
+    <h2>What the scanner checks</h2>
+    <div class="grid">
+      <div class="tile"><h3>Credential exposure</h3><p>Patterns for AWS access keys, GitHub tokens, API keys and generic hardcoded secrets.</p></div>
+      <div class="tile"><h3>SQL injection patterns</h3><p>Risky query construction using concatenation, f-strings and formatting patterns.</p></div>
+      <div class="tile"><h3>Web configuration</h3><p>Missing security headers and insecure HTTP references.</p></div>
+      <div class="tile"><h3>Unsafe code and settings</h3><p>Checks involving eval, exec, unsafe pickle use, debug mode and hardcoded passwords.</p></div>
+      <div class="tile"><h3>Reports</h3><p>HTML findings with severity levels and remediation guidance, with secret masking and duplicate-finding reduction.</p></div>
+      <div class="tile"><h3>Test targets</h3><p>Individual files and directories, including a deliberately vulnerable synthetic sample application.</p></div>
+    </div>
+  </section>
+  <section class="panel">
+    <h2>Testing and improvements</h2>
+    <ul>
+      <li>Early credential testing found that the initial scanner detected 8 of 13 deliberately planted fictional credential assignments. It missed some quoted dictionary-key and AWS-related formats.</li>
+      <li>Review also identified problems with unmasked secret values, duplicate findings and inconsistent single-file scanning.</li>
+      <li>The follow-up work prioritised provider-specific credential patterns, corrected the synthetic AWS test expectation, improved secret masking and deduplication, and cleaned generated files from the repository.</li>
+      <li><strong>Verified regression result on 2 November 2026: 98 tests passed, 0 failed.</strong></li>
+    </ul>
+    <div class="notice">The 98 passing tests confirm the expected behaviour for the included unit and synthetic validation cases only. They do not establish perfect detection, zero false positives or production readiness.</div>
+  </section>
+  <section class="panel">
+    <h2>What this experiment does not prove</h2>
+    <ul>
+      <li>It does not actively probe a public website or test a running service over the network.</li>
+      <li>It is not a substitute for dynamic application security testing, dependency scanning, a professional penetration test or a formal security audit.</li>
+      <li>Pattern-based checks can miss unfamiliar credential formats and can produce false positives. Every finding needs human review.</li>
+      <li>The sample application contains fictional vulnerable examples for controlled testing and must not be deployed.</li>
+    </ul>
+    <p>A future development step would be to improve credential-format coverage, audit every report output for accidental secret leakage, add CI and broaden the synthetic test corpus.</p>
+  </section>
+  <section class="panel">
+    <h2>Technology and project links</h2>
+    <p>Python · pytest · static analysis · regular-expression detection · HTML reporting · AI-assisted development and code review.</p>
+    <p>DeepSeek is credited for the initial implementation. ChatGPT supported the subsequent independent review, fixes, regression testing and documentation. Claude was discussed as a possible independent reviewer, but was not used to produce the recorded test results.</p>
+    <div class="links">
+      <a class="button" href="https://github.com/Jazblue/deepseek-security-auditor" target="_blank" rel="noopener noreferrer">View source code on GitHub</a>
+      <a class="button secondary" href="https://github.com/Jazblue/deepseek-security-auditor/blob/main/README.md" target="_blank" rel="noopener noreferrer">Read technical README</a>
+      <a class="button secondary" href="index.html">Back to portfolio</a>
+    </div>
+  </section>
+</main>
+<footer>Jason Harvey · Practical AI, AWS and automation experiments</footer>
+</body>
+</html>
