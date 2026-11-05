@@ -130,13 +130,17 @@
         }
 
         .btn-outline {
-            border: 2px solid var(--primary);
-            color: var(--primary);
+            background: #ffffff;
+            border: 2px solid #ffffff;
+            color: #1e40af;
+            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.16);
         }
 
-        .btn-outline:hover {
-            background: var(--primary);
-            color: white;
+        .btn-outline:hover,
+        .btn-outline:focus-visible {
+            background: #dbeafe;
+            border-color: #dbeafe;
+            color: #1e3a8a;
             transform: translateY(-2px);
             box-shadow: var(--shadow-hover);
         }
@@ -366,7 +370,6 @@
         <div class="hero-buttons">
             <a href="#featured-projects" class="btn btn-outline">View My Projects</a>
             <a href="https://github.com/Jazblue" target="_blank" class="btn btn-primary">GitHub</a>
-            <a href="pooled-findings.html" class="btn btn-outline">Pooled AI Experiment</a>
             <a href="jasoncvaugust2026.docx" download class="btn btn-outline">Download CV</a>
             <a href="#contact" class="btn btn-secondary">Contact Me</a>
         </div>
