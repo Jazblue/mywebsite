@@ -107,40 +107,24 @@
             font-size: 1rem;
         }
 
-        .btn-primary {
-            background: var(--primary);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
-        }
-
+        .btn-primary,
+        .btn-secondary,
         .btn-outline {
             background: #ffffff;
+            color: #4c1d95;
             border: 2px solid #ffffff;
-            color: #1e40af;
-            box-shadow: 0 2px 8px rgba(15, 23, 42, 0.16);
+            box-shadow: 0 2px 8px rgba(35, 12, 66, 0.18);
         }
 
+        .btn-primary:hover,
+        .btn-secondary:hover,
         .btn-outline:hover,
+        .btn-primary:focus-visible,
+        .btn-secondary:focus-visible,
         .btn-outline:focus-visible {
-            background: #dbeafe;
-            border-color: #dbeafe;
-            color: #1e3a8a;
+            background: #ede9fe;
+            border-color: #ede9fe;
+            color: #3b0764;
             transform: translateY(-2px);
             box-shadow: var(--shadow-hover);
         }
