@@ -639,18 +639,32 @@ AI-powered voice support system using Vapi for AI voice orchestration, Twilio fo
             </div>
                     <div class="cards-grid cards-2" style="margin-top: 2rem;">
                 <div class="card featured-card">
-                    <h3>SmartHR Assistant</h3>
-                    <p><strong>In Development</strong></p>
-                    <p>A role-based HR assistant application with separate employee and HR workspaces. Employees can submit holiday requests and view their leave balances, while HR can review requests and approve or reject them. Approved leave automatically updates the employee's balance.</p>
-                    <p><strong>Current development:</strong> Building and testing the AWS-backed application using Amazon Cognito for sign-in and role checks, API Gateway and Lambda for the backend, and DynamoDB for application data. Amazon Bedrock AgentCore integration is planned as a later stage.</p>
+                    <h3>SmartHR — HR Management Assistant</h3>
+                    <p><strong>Live application</strong></p>
+                    <p>A role-based HR management application with separate HR and employee workspaces. Employees can sign in, submit holiday requests and view their own requests. HR users can view employee records and review pending holiday requests.</p>
+                    <p><strong>AWS architecture:</strong> React frontend hosted on AWS Amplify, Amazon Cognito for authentication and role-based access, API Gateway and Lambda for backend operations, and DynamoDB for application data. The application uses a serverless architecture.</p>
                     <div class="tags">
-                        <span class="tag">AWS Cognito</span>
-                        <span class="tag">Lambda</span>
+                        <span class="tag">AWS Amplify</span>
+                        <span class="tag">Amazon Cognito</span>
+                        <span class="tag">AWS Lambda</span>
                         <span class="tag">API Gateway</span>
                         <span class="tag">DynamoDB</span>
                         <span class="tag">React</span>
                     </div>
-                    <a href="https://github.com/Jazblue/SmartHR" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="width: 100%; text-align: center;">View SmartHR on GitHub</a>
+                    <h4 style="margin: 1.5rem 0 0.75rem;">Application screenshots</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.75rem; margin-bottom: 1.5rem;">
+                        <img src="images/loginscreen.PNG" alt="SmartHR login screen" loading="lazy" style="display:block;width:100%;height:180px;object-fit:contain;background:#f8fafc;border:1px solid var(--border);border-radius:8px;padding:0.25rem;">
+                        <img src="images/employeesscreen.PNG" alt="SmartHR employee workspace" loading="lazy" style="display:block;width:100%;height:180px;object-fit:contain;background:#f8fafc;border:1px solid var(--border);border-radius:8px;padding:0.25rem;">
+                        <img src="images/backendemployees.PNG" alt="SmartHR employee records view" loading="lazy" style="display:block;width:100%;height:180px;object-fit:contain;background:#f8fafc;border:1px solid var(--border);border-radius:8px;padding:0.25rem;">
+                        <img src="images/employeeholidayrequest.PNG" alt="SmartHR employee holiday request" loading="lazy" style="display:block;width:100%;height:180px;object-fit:contain;background:#f8fafc;border:1px solid var(--border);border-radius:8px;padding:0.25rem;">
+                        <img src="images/backandadminpendingholidayrequest.PNG" alt="SmartHR HR pending holiday requests" loading="lazy" style="display:block;width:100%;height:180px;object-fit:contain;background:#f8fafc;border:1px solid var(--border);border-radius:8px;padding:0.25rem;">
+                        <img src="images/backendcheckingholidayrequests.PNG" alt="SmartHR holiday request management" loading="lazy" style="display:block;width:100%;height:180px;object-fit:contain;background:#f8fafc;border:1px solid var(--border);border-radius:8px;padding:0.25rem;">
+                    </div>
+                    <div class="hero-buttons" style="display:flex;flex-wrap:wrap;gap:0.75rem;">
+                        <a href="https://main.dinb3dclppt82.amplifyapp.com" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Open Live SmartHR</a>
+                        <a href="https://github.com/Jazblue/SmartHR" target="_blank" rel="noopener noreferrer" class="btn btn-outline">View Source Code on GitHub</a>
+                    </div>
+                    <p style="margin-top: 1rem;"><strong>Future enhancement:</strong> Amazon Bedrock AgentCore integration is planned as a later development stage.</p>
                 </div>
             </div>
 </section>
