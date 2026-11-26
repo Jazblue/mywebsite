@@ -640,15 +640,18 @@ AI-powered voice support system using Vapi for AI voice orchestration, Twilio fo
                     <div class="cards-grid cards-2" style="margin-top: 2rem;">
                 <div class="card featured-card">
                     <h3>SmartHR — HR Management Assistant</h3>
-                    <p><strong>Live application</strong></p>
-                    <p>A role-based HR management application with separate HR and employee workspaces. Employees can sign in, submit holiday requests and view their own requests. HR users can view employee records and review pending holiday requests.</p>
-                    <p><strong>AWS architecture:</strong> React frontend hosted on AWS Amplify, Amazon Cognito for authentication and role-based access, API Gateway and Lambda for backend operations, and DynamoDB for application data. The application uses a serverless architecture.</p>
+                    <p><strong>AWS-hosted working prototype — active development</strong></p>
+                    <p>A role-based HR management application with separate HR and employee workspaces. Employees can sign in, submit holiday requests and view their own requests; HR users can manage employee records and review pending requests.</p>
+                    <p><strong>Conversational AI:</strong> The employee assistant uses Amazon Nova Lite to understand questions and calls an Amazon Bedrock AgentCore Gateway tool to retrieve the signed-in employee’s holiday balance from DynamoDB. The end-to-end balance question has been tested with an employee account.</p>
+                    <p><strong>AWS architecture:</strong> React frontend hosted on AWS Amplify, Amazon Cognito JWT authentication and group-based authorization, API Gateway, Lambda, DynamoDB, Amazon Bedrock Nova Lite and AgentCore Gateway.</p>
                     <div class="tags">
                         <span class="tag">AWS Amplify</span>
                         <span class="tag">Amazon Cognito</span>
                         <span class="tag">AWS Lambda</span>
                         <span class="tag">API Gateway</span>
                         <span class="tag">DynamoDB</span>
+                        <span class="tag">Amazon Nova Lite</span>
+                        <span class="tag">Bedrock AgentCore</span>
                         <span class="tag">React</span>
                     </div>
                     <h4 style="margin: 1.5rem 0 0.75rem;">Application screenshots</h4>
@@ -662,9 +665,9 @@ AI-powered voice support system using Vapi for AI voice orchestration, Twilio fo
                     </div>
                     <div class="hero-buttons" style="display:flex;flex-wrap:wrap;gap:0.75rem;">
                         <a href="https://main.dinb3dclppt82.amplifyapp.com" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Open Live SmartHR</a>
-                        <a href="https://github.com/Jazblue/SmartHR" target="_blank" rel="noopener noreferrer" class="btn btn-outline">View Source Code on GitHub</a>
+                        <a href="https://github.com/Jazblue/SmartHR" target="_blank" rel="noopener noreferrer" class="btn btn-outline">View Initial Flask Prototype on GitHub</a>
                     </div>
-                    <p style="margin-top: 1rem;"><strong>Future enhancement:</strong> Amazon Bedrock AgentCore integration is planned as a later development stage.</p>
+                    <p style="margin-top: 1rem;"><strong>Project status:</strong> The authenticated holiday-balance question is working end-to-end for an employee account. Cross-employee isolation testing and broader HR question coverage are still in progress. The public GitHub repository currently contains the original Flask prototype, not the full AWS-backed implementation.</p>
                 </div>
             </div>
 </section>
