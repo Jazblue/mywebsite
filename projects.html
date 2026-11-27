@@ -151,7 +151,7 @@
         "@type": "TechArticle",
         "name": "SmartHR — HR Management Assistant",
         "description": "A role-based HR application with employee and HR workspaces, holiday requests, approval workflows and leave-balance updates. Its employee-facing AI assistant uses Amazon Nova Lite and an Amazon Bedrock AgentCore Gateway tool to retrieve the signed-in employee’s holiday balance from DynamoDB. Cognito JWT authentication, API Gateway and Lambda connect the application to AWS services. The end-to-end holiday-balance flow has been tested with an employee account; broader authorization testing and additional HR questions remain in development.",
-        "url": "https://github.com/Jazblue/SmartHR"
+        "url": "https://main.dinb3dclppt82.amplifyapp.com"
       }
     }
   ]
@@ -415,7 +415,8 @@
         <div class="project-card">
           <h3>SmartHR — HR Management Assistant</h3>
           <p>
-            <span class="project-tag">Working Prototype</span>
+            <span class="project-tag">Live AWS Demo</span>
+            <span class="project-tag">AWS Amplify</span>
             <span class="project-tag">React</span>
             <span class="project-tag">Amazon Cognito</span>
             <span class="project-tag">AWS Lambda</span>
@@ -424,11 +425,11 @@
             <span class="project-tag">Amazon Nova Lite</span>
             <span class="project-tag">Bedrock AgentCore</span>
           </p>
-          <p>SmartHR has separate employee and HR workspaces for employee records, holiday requests, HR approvals and leave-balance updates. The employee-facing AI assistant uses Amazon Nova Lite to understand natural-language questions and an Amazon Bedrock AgentCore Gateway tool to retrieve the signed-in employee’s holiday balance from DynamoDB.</p>
-          <p style="font-size:0.9rem;color:#666;"><strong>AWS architecture:</strong> React, Amazon Cognito JWT authentication and employee-group authorization, API Gateway, Lambda, DynamoDB, Amazon Bedrock Nova Lite and AgentCore Gateway. The holiday-balance question has been tested end-to-end with an employee account. Cross-employee isolation testing and wider HR question coverage remain outstanding.</p>
-          <p style="font-size:0.9rem;color:#666;"><strong>Repository note:</strong> The public GitHub repository contains the original Python/Flask prototype; it does not yet contain the full AWS-backed implementation.</p>
+          <p>SmartHR is a live AWS-hosted HR application with separate employee and HR workspaces for employee records, holiday requests, HR approvals and leave-balance updates. Its employee-facing AI assistant uses Amazon Nova Lite to understand natural-language questions and an Amazon Bedrock AgentCore Gateway tool to retrieve the signed-in employee’s holiday balance from DynamoDB.</p>
+          <p style="font-size:0.9rem;color:#666;"><strong>AWS architecture:</strong> React frontend deployed through AWS Amplify, Amazon Cognito authentication and employee-group authorization, API Gateway, Python AWS Lambda, DynamoDB, Amazon Bedrock Nova Lite and AgentCore Gateway tool integration. The holiday-balance question has been tested end-to-end with an employee account. Broader HR question coverage and further authorization testing remain in progress.</p>
+          <p style="font-size:0.9rem;color:#666;"><strong>Source code:</strong> The SmartHR GitHub repository is private. The live application is available to explore through the demo link.</p>
           <div class="project-links">
-            <a href="https://github.com/Jazblue/SmartHR" target="_blank" rel="noopener noreferrer">View initial Flask prototype on GitHub →</a>
+            <a href="https://main.dinb3dclppt82.amplifyapp.com" target="_blank" rel="noopener noreferrer">Open live SmartHR demo →</a>
           </div>
         </div>
       </div>
