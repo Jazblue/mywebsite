@@ -257,6 +257,25 @@
       margin-bottom: 1.5rem;
       font-weight: 500;
     }
+
+    .smarthr-architecture { margin: 1.5rem 0; padding: 1.25rem; background: #f1f5f9; border: 1px solid #dbe3ec; border-radius: 10px; }
+    .smarthr-architecture h4 { margin: 0 0 .4rem; color: #1f2937; }
+    .smarthr-architecture .diagram-intro { margin: 0 0 1rem; font-size: .9rem; color: #475569; }
+    .smarthr-flow { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: .55rem; align-items: stretch; }
+    .smarthr-node { position: relative; min-width: 0; padding: .75rem .5rem; text-align: center; background: #fff; border: 1px solid #cbd5e1; border-radius: 8px; }
+    .smarthr-node strong { display: block; color: #1e3a8a; font-size: .88rem; }
+    .smarthr-node span { display: block; margin-top: .3rem; color: #64748b; font-size: .76rem; line-height: 1.35; }
+    .smarthr-ai-path { margin-top: 1rem; padding-top: 1rem; border-top: 1px dashed #cbd5e1; }
+    .smarthr-ai-path > strong { display: block; margin-bottom: .65rem; color: #334155; font-size: .9rem; }
+    .smarthr-ai-flow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .55rem; }
+    .smarthr-ai-flow .smarthr-node { background: #eff6ff; border-color: #bfdbfe; }
+    .smarthr-ai-flow .smarthr-node strong { color: #1d4ed8; }
+    .smarthr-diagram-note { margin: .8rem 0 0; color: #64748b; font-size: .78rem; }
+    @media (max-width: 620px) {
+      .smarthr-flow { grid-template-columns: 1fr; }
+      .smarthr-ai-flow { grid-template-columns: 1fr 1fr; }
+    }
+
   </style>
 </head>
 <body>
@@ -427,6 +446,27 @@
           </p>
           <p>SmartHR is a live AWS-hosted HR application with separate employee and HR workspaces for employee records, holiday requests, HR approvals and leave-balance updates. Its employee-facing AI assistant uses Amazon Nova Lite to understand natural-language questions and an Amazon Bedrock AgentCore Gateway tool to retrieve the signed-in employee’s holiday balance from DynamoDB.</p>
           <p style="font-size:0.9rem;color:#666;"><strong>AWS architecture:</strong> React frontend deployed through AWS Amplify, Amazon Cognito authentication and employee-group authorization, API Gateway, Python AWS Lambda, DynamoDB, Amazon Bedrock Nova Lite and AgentCore Gateway tool integration. The holiday-balance question has been tested end-to-end with an employee account. Broader HR question coverage and further authorization testing remain in progress.</p>
+          <div class="smarthr-architecture" role="group" aria-label="SmartHR AWS serverless architecture diagram">
+            <h4>How SmartHR works on AWS</h4>
+            <p class="diagram-intro">The signed-in employee uses the React application; AWS services handle identity, requests, application logic and data.</p>
+            <div class="smarthr-flow">
+              <div class="smarthr-node"><strong>Amazon Cognito</strong><span>Secure sign-in and employee identity</span></div>
+              <div class="smarthr-node"><strong>React + Amplify</strong><span>Employee and HR web workspaces</span></div>
+              <div class="smarthr-node"><strong>API Gateway</strong><span>Authenticated API requests</span></div>
+              <div class="smarthr-node"><strong>Python Lambda</strong><span>Application logic and checks</span></div>
+              <div class="smarthr-node"><strong>DynamoDB</strong><span>Employee and holiday records</span></div>
+            </div>
+            <div class="smarthr-ai-path">
+              <strong>AI assistant — natural-language holiday-balance lookup</strong>
+              <div class="smarthr-ai-flow">
+                <div class="smarthr-node"><strong>Employee question</strong><span>“How much leave do I have left?”</span></div>
+                <div class="smarthr-node"><strong>Amazon Nova Lite</strong><span>Interprets the question</span></div>
+                <div class="smarthr-node"><strong>AgentCore Gateway</strong><span>Provides the balance-lookup tool</span></div>
+                <div class="smarthr-node"><strong>DynamoDB</strong><span>Returns the signed-in employee’s balance</span></div>
+              </div>
+            </div>
+            <p class="smarthr-diagram-note">Serverless architecture: AWS manages the underlying infrastructure for these services. The live demo is in active development; the holiday-balance flow has been tested end-to-end.</p>
+          </div>
           <p style="font-size:0.9rem;color:#666;"><strong>Source code:</strong> The SmartHR GitHub repository is private. The live application is available to explore through the demo link.</p>
           <div class="project-links">
             <a href="https://main.dinb3dclppt82.amplifyapp.com" target="_blank" rel="noopener noreferrer">Open live SmartHR demo →</a>
